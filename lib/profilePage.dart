@@ -10,6 +10,8 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
+import 'package:share_extend/share_extend.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -125,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void downloadAdmitCard(String link, String text) async {
     String dir = (await getExternalStorageDirectory()).path;
     print(dir);
-    bool exists = await File('$dir/${widget.uname}Admit$text').exists();
+    bool exists = await File('$dir/${widget.uname}Admit$text.pdf').exists();
     setState(() {
       isLoading = true;
     });
@@ -138,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  PDFScreen(File('$dir/${widget.uname}Admit$text').path)));
+                  PDFScreen(File('$dir/${widget.uname}Admit$text.pdf').path)));
     } else {
       Response response = await post(
         "https://ancient-waters-86273.herokuapp.com/admitCard",
@@ -155,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
         var bytes = response.bodyBytes;
         print(bytes);
 
-        File file = new File('$dir/${widget.uname}Admit$text');
+        File file = new File('$dir/${widget.uname}Admit$text.pdf');
         await file.writeAsBytes(bytes);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
@@ -179,7 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void downloadGradeCard(String link, String text) async {
     String dir = (await getExternalStorageDirectory()).path;
     print(dir);
-    bool exists = await File('$dir/${widget.uname}Grade$text').exists();
+    bool exists = await File('$dir/${widget.uname}Grade$text.pdf').exists();
     setState(() {
       isLoading = true;
     });
@@ -192,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  PDFScreen(File('$dir/${widget.uname}Grade$text').path)));
+                  PDFScreen(File('$dir/${widget.uname}Grade$text.pdf').path)));
     } else {
       Response response = await post(
         "https://ancient-waters-86273.herokuapp.com/gradeCard",
@@ -209,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
         var bytes = response.bodyBytes;
         print(bytes);
 
-        File file = new File('$dir/${widget.uname}Grade$text');
+        File file = new File('$dir/${widget.uname}Grade$text.pdf');
         await file.writeAsBytes(bytes);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
@@ -243,7 +245,9 @@ class PDFScreen extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.share),
-              onPressed: () {},
+              onPressed: () {
+                ShareExtend.share(pathPDF, "file");
+              },
             ),
           ],
         ),
