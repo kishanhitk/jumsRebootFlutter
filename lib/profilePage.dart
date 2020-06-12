@@ -79,8 +79,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               RaisedButton(
                                   onPressed: () {
                                     downloadAdmitCard(
-                                      widget.user.buttons[index].text,
                                       widget.user.buttons[index].link,
+                                      widget.user.buttons[index].text,
                                     );
                                   },
                                   child: Text("Admit Card")),
@@ -123,7 +123,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void downloadAdmitCard(String link, String text) async {
-    String dir = (await getApplicationDocumentsDirectory()).path;
+    String dir = (await getExternalStorageDirectory()).path;
+    print(dir);
     bool exists = await File('$dir/${widget.uname}Admit$text').exists();
     setState(() {
       isLoading = true;
@@ -176,7 +177,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void downloadGradeCard(String link, String text) async {
-    String dir = (await getApplicationDocumentsDirectory()).path;
+    String dir = (await getExternalStorageDirectory()).path;
+    print(dir);
     bool exists = await File('$dir/${widget.uname}Grade$text').exists();
     setState(() {
       isLoading = true;
