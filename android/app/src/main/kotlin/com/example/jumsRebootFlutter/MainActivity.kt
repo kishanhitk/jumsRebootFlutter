@@ -1,4 +1,4 @@
-package com.example.jumsRebootFlutter
+package com.kishans.jumsRebootFlutter
 
 import io.flutter.embedding.android.FlutterActivity
 
