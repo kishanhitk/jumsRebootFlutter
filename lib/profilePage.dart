@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +10,7 @@ import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:jumsRebootFlutter/notificcations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
@@ -29,6 +31,18 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              icon: FaIcon(FontAwesomeIcons.bell),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        builder: (context) => NotificationPage(
+                              user: widget.user,
+                            )));
+              })
+        ],
         title: Text("Profile"),
       ),
       body: Column(
@@ -104,19 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
           ),
-          Text("Notice"),
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-              itemCount: widget.user.notices.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(widget.user.notices[index]),
-                );
-              },
-            ),
-          ),
+
           isLoading ? CircularProgressIndicator() : Container(),
           // PDFViewerScaffold(path: )
         ],

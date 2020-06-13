@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
@@ -16,6 +17,12 @@ class _LoginPageState extends State<LoginPage> {
   String pass = '158261ed';
   String url;
   bool isLoading = false;
+  bool _isObscureText = true;
+  void toggle() {
+    setState(() {
+      _isObscureText = !_isObscureText;
+    });
+  }
 
   String serverResponse;
   submit() async {
@@ -56,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0,
         title: Text("JUMS Reboot"),
       ),
       body: Container(
@@ -63,10 +71,21 @@ class _LoginPageState extends State<LoginPage> {
             ? Center(child: CircularProgressIndicator())
             : Form(
                 child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10),
                     child: TextFormField(
+                      decoration: InputDecoration(
+                          filled: true,
+                          prefixIcon: Icon(
+                            Icons.person,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(50),
+                          )),
                       keyboardType: TextInputType.number,
                       initialValue: "001811601047",
                       onChanged: (val) {
@@ -78,8 +97,31 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10),
                     child: TextFormField(
+                      obscureText: _isObscureText,
+                      decoration: InputDecoration(
+                          fillColor: Color(
+                            0x11304ffe,
+                          ),
+                          filled: true,
+                          labelText: "Password",
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          prefixIcon: Icon(
+                            Icons.lock,
+                          ),
+                          suffixIcon: IconButton(
+                              icon: Icon(!_isObscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                toggle();
+                              }),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(50),
+                          )),
                       keyboardType: TextInputType.number,
                       initialValue: "158261ed",
                       onChanged: (val) {
@@ -90,9 +132,25 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                   ),
-                  RaisedButton(
-                    onPressed: submit,
-                    child: Text("Login"),
+                  FlatButton(onPressed: () {}, child: Text("Forgot Password?")),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      color: Color(
+                        0xff304ffe,
+                      ),
+                      onPressed: submit,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 150.0, vertical: 15),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               )),
