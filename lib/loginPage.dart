@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jumsRebootFlutter/forgotpassword.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
@@ -83,7 +84,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Container(
         child: isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: SpinKitCubeGrid(
+                      color: Theme.of(context).primaryColor,
+                    ) ??
+                    CircularProgressIndicator())
             : Form(
                 key: _formKey,
                 child: Column(
@@ -184,7 +189,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState.validate()) submit();
-                          
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

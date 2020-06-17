@@ -30,10 +30,19 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Theme.of(context).primaryColor),
+            onPressed: () => Navigator.pop(context)),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
         actions: [
           IconButton(
-              icon: FaIcon(FontAwesomeIcons.bell),
+              icon: FaIcon(FontAwesomeIcons.bell,
+                  color: Theme.of(context).primaryColor),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -43,72 +52,119 @@ class _ProfilePageState extends State<ProfilePage> {
                             )));
               })
         ],
-        title: Text("Profile"),
+        title: Text(
+          "Profile",
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
       ),
       body: Column(
         children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      widget.user.imgUrl,
-                      fit: BoxFit.contain,
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 150,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        widget.user.imgUrl,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.user.name),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.user.course),
-                  )
-                ],
-              ),
-            ],
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: Text(
+                        widget.user.name,
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3, bottom: 10),
+                      child: Text(widget.user.course),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
+          Divider(color: Colors.black),
           Expanded(
             flex: 2,
             child: ListView.builder(
               itemCount: widget.user.buttons.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor, width: 0.5)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(widget.user.buttons[index].text),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              RaisedButton(
-                                  onPressed: () {
-                                    downloadAdmitCard(
-                                      widget.user.buttons[index].link,
-                                      widget.user.buttons[index].text,
-                                    );
-                                  },
-                                  child: Text("Admit Card")),
-                              RaisedButton(
-                                  onPressed: () {
-                                    downloadGradeCard(
-                                      widget.user.buttons[index].link,
-                                      widget.user.buttons[index].text,
-                                    );
-                                  },
-                                  child: Text("Grade Card")),
-                            ],
+                          Text(
+                            widget.user.buttons[index].text,
+                            style: TextStyle(fontSize: 22),
+                          ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide.none,
+                                    ),
+                                    color: Theme.of(context).primaryColor,
+                                    onPressed: () {
+                                      downloadAdmitCard(
+                                        widget.user.buttons[index].link,
+                                        widget.user.buttons[index].text,
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        "Admit Card",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    )),
+                                RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide.none,
+                                    ),
+                                    color: Theme.of(context).primaryColor,
+                                    onPressed: () {
+                                      downloadGradeCard(
+                                        widget.user.buttons[index].link,
+                                        widget.user.buttons[index].text,
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                        "Grade Card",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    )),
+                              ],
+                            ),
                           ),
                         ],
                       ),

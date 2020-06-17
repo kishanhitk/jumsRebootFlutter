@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 
@@ -11,6 +12,10 @@ class NotificationPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(CupertinoIcons.back,
+                color: Theme.of(context).primaryColor),
+            onPressed: () => Navigator.pop(context)),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
