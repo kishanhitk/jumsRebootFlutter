@@ -41,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
         elevation: 0,
         actions: [
           IconButton(
-              icon: FaIcon(FontAwesomeIcons.bell,
+              icon: FaIcon(Icons.notifications ?? FontAwesomeIcons.bell,
                   color: Theme.of(context).primaryColor),
               onPressed: () {
                 Navigator.push(
@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Column(
         children: [
           Container(
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
@@ -77,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
@@ -299,10 +300,21 @@ class PDFScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PDFViewerScaffold(
         appBar: AppBar(
-          title: Text("Document"),
+          leading: IconButton(
+              icon: Icon(CupertinoIcons.back,
+                  color: Theme.of(context).primaryColor),
+              onPressed: () => Navigator.pop(context)),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: Text("Document",
+              style: TextStyle(color: Theme.of(context).primaryColor)),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.share),
+              icon: Icon(
+                Icons.share,
+                color: Theme.of(context).primaryColor,
+              ),
               onPressed: () {
                 ShareExtend.share(pathPDF, "file");
               },

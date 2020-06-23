@@ -6,8 +6,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jumsRebootFlutter/forgotpassword.dart';
+import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -29,6 +31,18 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   String serverResponse;
+  void saveToDb(User user) async {
+    final String encodedData = SemButtons.encodeButtons(user.buttons);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('uname', uname);
+    prefs.setString('pass', pass);
+    prefs.setString('buttons', encodedData);
+    prefs.setString('name', user.name);
+    prefs.setString('course', user.course);
+    prefs.setString('imgUrl', user.imgUrl);
+    prefs.setStringList('notices', user.notices);
+  }
+
   submit() async {
     setState(() {
       isLoading = true;
@@ -46,8 +60,9 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         serverResponse = response.body;
       });
-      var b = User.fromJson(json.decode(serverResponse));
-      print(b.buttons);
+      var user = User.fromJson(json.decode(serverResponse));
+      saveToDb(user);
+      print(user.buttons);
       setState(() {
         isLoading = false;
       });
@@ -55,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         context,
         CupertinoPageRoute(
           builder: (context) => ProfilePage(
-            user: b,
+            user: user,
             pass: pass,
             uname: uname,
           ),
