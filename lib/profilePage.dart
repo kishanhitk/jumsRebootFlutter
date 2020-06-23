@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
+import 'package:jumsRebootFlutter/loginPage.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
@@ -14,6 +15,7 @@ import 'package:jumsRebootFlutter/notificcations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -27,18 +29,36 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool isLoading = false;
+  final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              child: Image.asset('assets/logo_trans.png'),
+            ),
+            ListTile(
+              onTap: () async {
+                SharedPreferences _preferences =
+                    await SharedPreferences.getInstance();
+                _preferences.clear();
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => LoginPage()));
+              },
+              title: Text("Log Out"),
+            )
+          ],
+        ),
+      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(CupertinoIcons.back,
-                color: Theme.of(context).primaryColor),
-            onPressed: () => Navigator.pop(context)),
+        iconTheme: new IconThemeData(color: Theme.of(context).primaryColor),
         centerTitle: true,
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
         actions: [
           IconButton(
               icon: FaIcon(Icons.notifications ?? FontAwesomeIcons.bell,
