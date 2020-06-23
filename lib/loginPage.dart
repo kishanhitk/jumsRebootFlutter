@@ -40,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
     prefs.setString('name', user.name);
     prefs.setString('course', user.course);
     prefs.setString('imgUrl', user.imgUrl);
-    prefs.setStringList('notices', user.notices);
   }
 
   submit() async {
@@ -101,9 +100,8 @@ class _LoginPageState extends State<LoginPage> {
         child: isLoading
             ? Center(
                 child: SpinKitCubeGrid(
-                      color: Theme.of(context).primaryColor,
-                    ) ??
-                    CircularProgressIndicator())
+                color: Theme.of(context).primaryColor,
+              ))
             : Form(
                 key: _formKey,
                 child: Column(

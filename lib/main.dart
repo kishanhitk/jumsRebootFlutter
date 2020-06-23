@@ -21,11 +21,9 @@ Future<void> main() async {
     String name = prefs.getString('name');
     String course = prefs.getString('course');
     String imgUrl = prefs.getString('imgUrl');
-    List<String> notices = prefs.getStringList('notices');
     List<SemButtons> butons =
         SemButtons.decodeButtons(prefs.getString('buttons'));
     user = User(
-        notices: notices,
         name: name,
         course: course,
         imgUrl: imgUrl,

@@ -47,9 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.push(
                     context,
                     CupertinoPageRoute(
-                        builder: (context) => NotificationPage(
-                              user: widget.user,
-                            )));
+                        builder: (context) => NotificationPage()));
               })
         ],
         title: Text(
