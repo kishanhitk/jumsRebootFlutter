@@ -9,6 +9,7 @@ import 'package:jumsRebootFlutter/forgotpassword.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
+import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       });
       Navigator.push(
         context,
-        CupertinoPageRoute(
+        MaterialPageRoute(
           builder: (context) => ProfilePage(
             user: user,
             pass: pass,
@@ -91,16 +92,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff323D4E),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            child: isLoading
-                ? Center(
-                    child: SpinKitCubeGrid(
-                    color: Theme.of(context).primaryColor,
-                  ))
-                : Column(
+      backgroundColor: Colors.white ?? Color(0xff323D4E),
+      body: Center(
+        child: Container(
+          child: isLoading
+              ? MyLoading()
+              : SingleChildScrollView(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset('assets/logo_trans.png'),
@@ -122,10 +120,9 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: InputDecoration(
                                     filled: true,
                                     hintText: "University Roll No.",
-                                    fillColor: Colors.white70 ??
-                                        Color(
-                                          0x11304ffe,
-                                        ),
+                                    fillColor: Color(
+                                      0x11304ffe,
+                                    ),
                                     prefixIcon: Icon(
                                       Icons.person,
                                     ),
@@ -154,10 +151,9 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 obscureText: _isObscureText,
                                 decoration: InputDecoration(
-                                    fillColor: Colors.white70 ??
-                                        Color(
-                                          0x11304ffe,
-                                        ),
+                                    fillColor: Color(
+                                      0x11304ffe,
+                                    ),
                                     filled: true,
                                     hintText: "Password",
                                     prefixIcon: Icon(
@@ -186,14 +182,17 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   Navigator.push(
                                       context,
-                                      CupertinoPageRoute(
+                                      MaterialPageRoute(
                                           builder: (context) =>
                                               ForgotPassword()));
                                 },
-                                child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
+                                child: Hero(
+                                  tag: "FOR",
+                                  child: Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
                                 )),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -222,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-          ),
+                ),
         ),
       ),
     );
