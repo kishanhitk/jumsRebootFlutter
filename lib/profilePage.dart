@@ -41,6 +41,12 @@ class _ProfilePageState extends State<ProfilePage> {
             DrawerHeader(
               child: Image.asset('assets/logo_trans.png'),
             ),
+            AboutListTile(
+              applicationIcon:
+                  SizedBox(height: 90, child: Image.asset('assets/logo.png')),
+              applicationName: "JUMS Reboot",
+              applicationVersion: "v0.9",
+            ),
             ListTile(
               onTap: () async {
                 SharedPreferences _preferences =
@@ -51,7 +57,6 @@ class _ProfilePageState extends State<ProfilePage> {
               },
               title: Text("Log Out"),
             ),
-            AboutListTile(),
           ],
         ),
       ),
@@ -60,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
         iconTheme: new IconThemeData(color: Theme.of(context).primaryColor),
         centerTitle: true,
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 0,
         actions: [
           IconButton(
               icon: FaIcon(Icons.notifications ?? FontAwesomeIcons.bell,
@@ -80,6 +85,12 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Column(
         children: [
           Container(
+            decoration: BoxDecoration(
+              // color: Color(0x11304ffe),
+              borderRadius: BorderRadius.circular(10),
+              border:
+                  Border.all(color: Theme.of(context).primaryColor, width: 0.1),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -97,7 +108,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 5.0),
@@ -115,7 +125,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          Divider(color: Colors.black),
           Expanded(
             flex: 2,
             child: ListView.builder(
@@ -126,15 +135,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       horizontal: 20.0, vertical: 10),
                   child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Theme.of(context).primaryColor, width: 0.5)),
+                      color: Color(0x10304ffe),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 0.1),
+                    ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Column(
                         children: [
-                          Text(
-                            widget.user.buttons[index].text,
-                            style: TextStyle(fontSize: 22),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: Text(
+                              widget.user.buttons[index].text,
+                              style: TextStyle(fontSize: 22),
+                            ),
                           ),
                           Divider(
                             thickness: 1,
@@ -146,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 RaisedButton(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
+                                      borderRadius: BorderRadius.circular(50.0),
                                       side: BorderSide.none,
                                     ),
                                     color: Theme.of(context).primaryColor,
@@ -166,7 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     )),
                                 RaisedButton(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
+                                      borderRadius: BorderRadius.circular(50.0),
                                       side: BorderSide.none,
                                     ),
                                     color: Theme.of(context).primaryColor,
