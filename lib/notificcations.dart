@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationPage extends StatefulWidget {
   @override
@@ -17,21 +18,37 @@ class _NotificationPageState extends State<NotificationPage> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future getNotices() async {
+    var prefs = await SharedPreferences.getInstance();
     refreshKey.currentState?.show();
     Response response =
         await get('https://ancient-waters-86273.herokuapp.com/notices');
     var resBody = response.body;
     var temp = json.decode(resBody)['notices'];
+
     List<String> noticeList = List<String>.from(temp);
+    prefs.setStringList('notices', noticeList);
     setState(() {
       notices = noticeList;
     });
   }
 
+  Future checkNotices() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List<String> temp = prefs.getStringList('notices');
+    if (temp != null) {
+      setState(() {
+        notices = temp;
+      });
+    } else
+      getNotices();
+  }
+
   @override
   void initState() {
     super.initState();
-    getNotices();
+    checkNotices();
+    WidgetsFlutterBinding.ensureInitialized();
   }
 
   @override
