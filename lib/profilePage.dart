@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/loginPage.dart';
@@ -17,6 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -36,16 +39,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
+        semanticLabel: "Menu",
         child: Column(
           children: [
             DrawerHeader(
               child: Image.asset('assets/logo_trans.png'),
-            ),
-            AboutListTile(
-              applicationIcon:
-                  SizedBox(height: 90, child: Image.asset('assets/logo.png')),
-              applicationName: "JUMS Reboot",
-              applicationVersion: "v0.9",
             ),
             ListTile(
               onTap: () async {
@@ -55,14 +53,68 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.push(context,
                     CupertinoPageRoute(builder: (context) => LoginPage()));
               },
-              title: Text("Log Out"),
+              title: Text(
+                "Log out",
+              ),
             ),
+            AboutListTile(
+              applicationIcon:
+                  SizedBox(height: 90, child: Image.asset('assets/logo.png')),
+              applicationName: "JUMS Reboot",
+              applicationVersion: "v0.9",
+            ),
+            ListTile(
+              onTap: () {
+                launch(
+                    'https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter');
+              },
+              title: Text("Rate us on Play Store."),
+            ),
+            ListTile(
+              onTap: () {
+                launch(
+                    'https://github.com/kishanhitk/jumsRebootFlutter/issues');
+              },
+              title: Text("Report an issue."),
+            ),
+            ListTile(
+              onTap: () {
+                launch('https://github.com/kishanhitk/jumsRebootFlutter');
+              },
+              title: Text("Fork me on GitHub."),
+            ),
+            ListTile(
+              onTap: () {
+                Share.share(
+                    "Hey!\nTry out this app for JUMS results.\nJUMS Reboot-\nhttps://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter");
+              },
+              title: Text("Share app with friends."),
+            ),
+            Spacer(),
+            Text(
+              "Made with ❤️ by",
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: Color(0x11304ffe),
+                  onPressed: () {
+                    launch('https://www.linkedin.com/in/kishanju/');
+                  },
+                  child: Text(
+                    "Kishan Kumar",
+                    style: TextStyle(fontSize: 15),
+                  )),
+            )
           ],
         ),
       ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: new IconThemeData(color: Theme.of(context).primaryColor),
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -100,8 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 150,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        widget.user.imgUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.user.imgUrl,
                         fit: BoxFit.contain,
                       ),
                     ),
