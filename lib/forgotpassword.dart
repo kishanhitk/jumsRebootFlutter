@@ -54,6 +54,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff323D4E),
       appBar: AppBar(
         centerTitle: true,
         title: Text("Reset Password"),
@@ -79,9 +80,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               return null;
                           },
                           decoration: InputDecoration(
-                              fillColor: Color(
-                                0x11304ffe,
-                              ),
+                              fillColor: Colors.white70 ??
+                                  Color(
+                                    0x11304ffe,
+                                  ),
                               labelText: "University Roll No.",
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
@@ -94,7 +96,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 borderRadius: BorderRadius.circular(50),
                               )),
                           keyboardType: TextInputType.number,
-                          initialValue: "001811601047",
                           onChanged: (val) {
                             setState(() {
                               uname = val;
@@ -114,9 +115,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               return null;
                           },
                           decoration: InputDecoration(
-                              fillColor: Color(
-                                0x11304ffe,
-                              ),
+                              fillColor: Colors.white70 ??
+                                  Color(
+                                    0x11304ffe,
+                                  ),
                               filled: true,
                               labelText: "Password",
                               floatingLabelBehavior:
@@ -129,7 +131,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 borderRadius: BorderRadius.circular(50),
                               )),
                           keyboardType: TextInputType.phone,
-                          initialValue: "9521875124",
                           onChanged: (val) {
                             setState(() {
                               phone = val;
@@ -163,7 +164,35 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                         ),
                       ),
-                      
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //     width: MediaQuery.of(context).size.width * 0.9,
+                      //     decoration: BoxDecoration(
+                      //         color: Theme.of(context).primaryColor,
+                      //         borderRadius: BorderRadius.circular(30)),
+                      //     child: Material(
+                      //       color: Colors.transparent,
+                      //       child: InkWell(
+                      //         onTap: () {
+                      //           if (_formKey.currentState.validate()) {
+                      //             print(uname);
+                      //             print(phone);
+                      //             submit();
+                      //           }
+                      //         },
+                      //         child: Padding(
+                      //           padding: const EdgeInsets.all(15.0),
+                      //           child: Center(
+                      //               child: Text(
+                      //             "Reset Password",
+                      //             style: TextStyle(color: Colors.white),
+                      //           )),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
