@@ -197,22 +197,26 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                color: Color(
-                                  0xff304ffe,
-                                ),
-                                onPressed: () {
-                                  if (_formKey.currentState.validate())
-                                    submit();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 150.0, vertical: 15),
-                                  child: Text(
-                                    "Login",
-                                    style: TextStyle(color: Colors.white),
+                              child: ButtonTheme(
+                                minWidth:
+                                    MediaQuery.of(context).size.width * 0.9,
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50)),
+                                  color: Color(
+                                    0xff304ffe,
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate())
+                                      submit();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                 ),
                               ),
