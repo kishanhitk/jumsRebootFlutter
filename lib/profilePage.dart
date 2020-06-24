@@ -166,6 +166,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                              child: SizedBox(
+                                                  height: 150,
+                                                  width: 150,
+                                                  child: MyLoading()));
+                                        },
+                                      );
                                       downloadAdmitCard(
                                         widget.user.buttons[index].link,
                                         widget.user.buttons[index].text,
@@ -186,6 +196,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return Dialog(
+                                              child: SizedBox(
+                                                  height: 150,
+                                                  width: 150,
+                                                  child: MyLoading()));
+                                        },
+                                      );
                                       downloadGradeCard(
                                         widget.user.buttons[index].link,
                                         widget.user.buttons[index].text,
@@ -230,6 +250,7 @@ class _ProfilePageState extends State<ProfilePage> {
     print(widget.uname);
     if (exists) {
       print("FIle Already exist");
+      Navigator.pop(context);
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -253,16 +274,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
         File file = new File('$dir/${widget.uname}Admit$text.pdf');
         await file.writeAsBytes(bytes);
+        Navigator.pop(context);
+
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
       } else {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: FaIcon(FontAwesomeIcons.solidWindowClose),
-                title:
-                    Text("Admit Card for this semester is not available yet."),
+              return AdmitCardErrorDialog(
+                type: "Admit",
               );
             });
       }
@@ -284,6 +305,8 @@ class _ProfilePageState extends State<ProfilePage> {
     print(widget.uname);
     if (exists) {
       print("FIle Already exist");
+      Navigator.pop(context);
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -307,23 +330,59 @@ class _ProfilePageState extends State<ProfilePage> {
 
         File file = new File('$dir/${widget.uname}Grade$text.pdf');
         await file.writeAsBytes(bytes);
+        Navigator.pop(context);
+
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
       } else {
         showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
-                content: FaIcon(FontAwesomeIcons.solidWindowClose),
-                title:
-                    Text("Grade Card for this semester is not available yet."),
-              );
+              return AdmitCardErrorDialog(type: "Grade");
             });
       }
     }
     setState(() {
       isLoading = false;
     });
+  }
+}
+
+class AdmitCardErrorDialog extends StatelessWidget {
+  final String type;
+
+  const AdmitCardErrorDialog({Key key, this.type}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Something Went Wrong.\nPossible Reasons:-"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: Text("⚫ $this card for this semester is not available yet."),
+          ),
+          ListTile(
+            title: Text("⚫ Original JUMS Website is down."),
+          ),
+          ListTile(
+            title: Text(
+                "⚫ Your JUMS password has changed since your last login.\nPlease logout and login with your new password."),
+          ),
+          ListTile(
+            title: Text("⚫ Our server is down."),
+          ),
+        ],
+      ),
+      actions: [
+        FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Dismiss"))
+      ],
+    );
   }
 }
 

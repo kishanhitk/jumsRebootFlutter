@@ -178,7 +178,9 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                               ),
                             ),
-                            FlatButton(
+                            Hero(
+                              tag: "FOR",
+                              child: FlatButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -186,14 +188,13 @@ class _LoginPageState extends State<LoginPage> {
                                           builder: (context) =>
                                               ForgotPassword()));
                                 },
-                                child: Hero(
-                                  tag: "FOR",
-                                  child: Text(
-                                    "Forgot Password?",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                )),
+                                child: Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: RaisedButton(
