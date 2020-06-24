@@ -12,6 +12,7 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:jumsRebootFlutter/notificcations.dart';
+import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
@@ -28,7 +29,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool isLoading = false;
+  bool isLoading = true;
   final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     CupertinoPageRoute(builder: (context) => LoginPage()));
               },
               title: Text("Log Out"),
-            )
+            ),
+            AboutListTile(),
           ],
         ),
       ),
@@ -194,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
 
-          isLoading ? CircularProgressIndicator() : Container(),
+          // isLoading ? CircularProgressIndicator() : Container(),
           // PDFViewerScaffold(path: )
         ],
       ),
