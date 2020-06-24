@@ -38,14 +38,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                content: SelectableText(newPasswordText),
+                title: SelectableText(newPasswordText),
               ));
     } else {
       showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                content: Text("Something went wrong!"),
-              ));
+          context: context, builder: (context) => ForgotPassErrorDialog());
     }
     setState(() {
       isLoading = false;
@@ -217,6 +214,43 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
               ),
       ),
+    );
+  }
+}
+
+class ForgotPassErrorDialog extends StatelessWidget {
+  const ForgotPassErrorDialog({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Something Went Wrong.\nPossible Reasons:-"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: Text("⚫ You entered a wrong roll number."),
+          ),
+          ListTile(
+            title: Text("⚫ You entered a wrong mobile number."),
+          ),
+          ListTile(
+            title: Text("⚫ Original JUMS website is down."),
+          ),
+          ListTile(
+            title: Text("⚫ Our server is down."),
+          ),
+        ],
+      ),
+      actions: [
+        FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Dismiss"))
+      ],
     );
   }
 }
