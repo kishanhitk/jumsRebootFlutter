@@ -136,8 +136,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            child: Wrap(
+                              alignment: WrapAlignment.spaceEvenly,
+                              spacing: 30,
                               children: [
                                 RaisedButton(
                                     shape: RoundedRectangleBorder(
