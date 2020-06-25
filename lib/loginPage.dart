@@ -79,9 +79,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          content: Text("Something went wrong!"),
-        ),
+        builder: (context) => LoginErrorDialog(),
       );
     }
     setState(() {
@@ -229,6 +227,41 @@ class _LoginPageState extends State<LoginPage> {
                 ),
         ),
       ),
+    );
+  }
+}
+
+class LoginErrorDialog extends StatelessWidget {
+  const LoginErrorDialog({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Something Went Wrong.\nPossible Reasons:-"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            title: Text(
+                "⚫ You entered a wrong roll number and password combination."),
+          ),
+          ListTile(
+            title: Text("⚫ Original JUMS website is down."),
+          ),
+          ListTile(
+            title: Text("⚫ Our server is down."),
+          ),
+        ],
+      ),
+      actions: [
+        FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Dismiss"))
+      ],
     );
   }
 }
