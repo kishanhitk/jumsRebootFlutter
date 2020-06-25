@@ -376,8 +376,10 @@ class _MyDrawerState extends State<MyDrawer> {
               SharedPreferences _preferences =
                   await SharedPreferences.getInstance();
               _preferences.clear();
-              Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => LoginPage()));
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  CupertinoPageRoute(builder: (context) => LoginPage()),
+                  (Route<dynamic> route) => false);
             },
             title: Text(
               "Log out",
