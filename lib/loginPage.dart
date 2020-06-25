@@ -245,7 +245,7 @@ class LoginErrorDialog extends StatelessWidget {
         children: [
           ListTile(
             title: Text(
-                "⚫ You entered a wrong roll number and password combination."),
+                "⚫ You entered a wrong roll number and password combination. Try resetting the password."),
           ),
           ListTile(
             title: Text("⚫ Original JUMS website is down."),

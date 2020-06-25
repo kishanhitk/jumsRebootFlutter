@@ -39,6 +39,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           context: context,
           builder: (context) => AlertDialog(
                 title: SelectableText(newPasswordText),
+                content: Text("Long press password to copy."),
               ));
     } else {
       showDialog(

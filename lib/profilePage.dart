@@ -331,6 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
       } else {
+        Navigator.pop(context);
         showDialog(
             context: context,
             builder: (context) {
@@ -387,6 +388,8 @@ class _ProfilePageState extends State<ProfilePage> {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
       } else {
+        Navigator.pop(context);
+
         showDialog(
             context: context,
             builder: (context) {
