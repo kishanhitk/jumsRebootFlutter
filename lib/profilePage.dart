@@ -15,6 +15,7 @@ import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:jumsRebootFlutter/notificcations.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
@@ -38,80 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        semanticLabel: "Menu",
-        child: Column(
-          children: [
-            DrawerHeader(
-              child: Image.asset('assets/logo_trans.png'),
-            ),
-            ListTile(
-              onTap: () async {
-                SharedPreferences _preferences =
-                    await SharedPreferences.getInstance();
-                _preferences.clear();
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => LoginPage()));
-              },
-              title: Text(
-                "Log out",
-              ),
-            ),
-            AboutListTile(
-              applicationIcon:
-                  SizedBox(height: 90, child: Image.asset('assets/logo.png')),
-              applicationName: "JUMS Reboot",
-              applicationVersion: "v0.9",
-            ),
-            ListTile(
-              onTap: () {
-                launch(
-                    'https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter');
-              },
-              title: Text("Rate us on Play Store."),
-            ),
-            ListTile(
-              onTap: () {
-                launch(
-                    'https://github.com/kishanhitk/jumsRebootFlutter/issues');
-              },
-              title: Text("Report an issue."),
-            ),
-            ListTile(
-              onTap: () {
-                launch('https://github.com/kishanhitk/jumsRebootFlutter');
-              },
-              title: Text("Fork me on GitHub."),
-            ),
-            ListTile(
-              onTap: () {
-                Share.share(
-                    "Hey!\nTry out this app for JUMS results.\nJUMS Reboot-\nhttps://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter");
-              },
-              title: Text("Share app with friends."),
-            ),
-            Spacer(),
-            Text(
-              "Made with ❤️ by",
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  color: Color(0x11304ffe),
-                  onPressed: () {
-                    launch('https://www.linkedin.com/in/kishanju/');
-                  },
-                  child: Text(
-                    "Kishan Kumar",
-                    style: TextStyle(fontSize: 15),
-                  )),
-            )
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
@@ -400,6 +328,121 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {
       isLoading = false;
     });
+  }
+}
+
+class MyDrawer extends StatefulWidget {
+  const MyDrawer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _MyDrawerState createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+  );
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      semanticLabel: "Menu",
+      child: Column(
+        children: [
+          DrawerHeader(
+            child: Image.asset('assets/logo_trans.png'),
+          ),
+          ListTile(
+            onTap: () async {
+              SharedPreferences _preferences =
+                  await SharedPreferences.getInstance();
+              _preferences.clear();
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => LoginPage()));
+            },
+            title: Text(
+              "Log out",
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              launch(
+                  'https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter');
+            },
+            title: Text("Exam Schedules"),
+          ),
+          ListTile(
+            onTap: () {
+              launch(
+                  'https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter');
+            },
+            title: Text("Rate us on Play Store"),
+          ),
+          AboutListTile(
+            applicationIcon:
+                SizedBox(height: 90, child: Image.asset('assets/logo.png')),
+            applicationName: _packageInfo.appName,
+            applicationVersion: _packageInfo.version,
+            applicationLegalese: "By Kishan Kumar",
+          ),
+          ListTile(
+            onTap: () {
+              launch('https://github.com/kishanhitk/jumsRebootFlutter/issues');
+            },
+            title: Text("Report an issue"),
+          ),
+          ListTile(
+            onTap: () {
+              launch('https://github.com/kishanhitk/jumsRebootFlutter');
+            },
+            title: Text("Fork me on GitHub"),
+          ),
+          ListTile(
+            onTap: () {
+              Share.share(
+                  "Hey!\nTry out this app for JUMS results.\nJUMS Reboot-\nhttps://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter");
+            },
+            title: Text("Share app with friends"),
+          ),
+          Spacer(),
+          Text(
+            "Made with ❤️ by",
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color(0x11304ffe),
+                onPressed: () {
+                  launch('https://www.linkedin.com/in/kishanju/');
+                },
+                child: Text(
+                  "Kishan Kumar",
+                  style: TextStyle(fontSize: 15),
+                )),
+          )
+        ],
+      ),
+    );
   }
 }
 
