@@ -10,6 +10,7 @@ import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:jumsRebootFlutter/services/networking.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -32,60 +33,60 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   String serverResponse;
-  void saveToDb(User user) async {
-    final String encodedData = SemButtons.encodeButtons(user.buttons);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('uname', uname);
-    prefs.setString('pass', pass);
-    prefs.setString('buttons', encodedData);
-    prefs.setString('name', user.name);
-    prefs.setString('course', user.course);
-    prefs.setString('imgUrl', user.imgUrl);
-  }
+  // void saveToDb(User user) async {
+  //   final String encodedData = SemButtons.encodeButtons(user.buttons);
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('uname', uname);
+  //   prefs.setString('pass', pass);
+  //   prefs.setString('buttons', encodedData);
+  //   prefs.setString('name', user.name);
+  //   prefs.setString('course', user.course);
+  //   prefs.setString('imgUrl', user.imgUrl);
+  // }
 
-  submit() async {
-    setState(() {
-      isLoading = true;
-    });
-    print(uname);
-    print(pass);
-    Response response = await post(
-      "https://ancient-waters-86273.herokuapp.com/",
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{'uname': uname, 'pass': pass}),
-    );
-    if (response.statusCode == 200) {
-      setState(() {
-        serverResponse = response.body;
-      });
-      var user = User.fromJson(json.decode(serverResponse));
-      saveToDb(user);
-      print(user.buttons);
-      setState(() {
-        isLoading = false;
-      });
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProfilePage(
-            user: user,
-            pass: pass,
-            uname: uname,
-          ),
-        ),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => LoginErrorDialog(),
-      );
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
+  // submit() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   print(uname);
+  //   print(pass);
+  //   Response response = await post(
+  //     "https://ancient-waters-86273.herokuapp.com/",
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(<String, String>{'uname': uname, 'pass': pass}),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       serverResponse = response.body;
+  //     });
+  //     var user = User.fromJson(json.decode(serverResponse));
+  //     saveToDb(user);
+  //     print(user.buttons);
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => ProfilePage(
+  //           user: user,
+  //           pass: pass,
+  //           uname: uname,
+  //         ),
+  //       ),
+  //     );
+  //   } else {
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => LoginErrorDialog(),
+  //     );
+  //   }
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -204,9 +205,17 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Color(
                                     0xff304ffe,
                                   ),
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate())
-                                      submit();
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await Networking(pass, uname)
+                                          .submit(context);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -227,41 +236,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
         ),
       ),
-    );
-  }
-}
-
-class LoginErrorDialog extends StatelessWidget {
-  const LoginErrorDialog({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Something Went Wrong.\nPossible Reasons:-"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text(
-                "⚫ You entered a wrong roll number and password combination. Try resetting the password."),
-          ),
-          ListTile(
-            title: Text("⚫ Original JUMS website is down."),
-          ),
-          ListTile(
-            title: Text("⚫ Our server is down."),
-          ),
-        ],
-      ),
-      actions: [
-        FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("Dismiss"))
-      ],
     );
   }
 }

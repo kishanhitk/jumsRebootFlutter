@@ -376,7 +376,7 @@ class _MyDrawerState extends State<MyDrawer> {
               SharedPreferences _preferences =
                   await SharedPreferences.getInstance();
               _preferences.clear();
-              Navigator.push(context,
+              Navigator.pushReplacement(context,
                   CupertinoPageRoute(builder: (context) => LoginPage()));
             },
             title: Text(
