@@ -25,12 +25,23 @@ class _ExamScheduleState extends State<ExamSchedule> {
       body: Column(
         children: [
           ListTile(
+            trailing: Icon(
+              Icons.launch,
+              color: Theme.of(context).primaryColor,
+            ),
+            subtitle: Text("Odd Sem 2020"),
             leading: Icon(FontAwesomeIcons.code),
             onTap: () => launch(
                 "http://juadmission.jdvu.ac.in/jums_exam/Reports/2020/Odd/Engg_Odd_Sem_2020_Routine.pdf"),
             title: Text("Engineering"),
           ),
+          Divider(),
           ListTile(
+            trailing: Icon(
+              Icons.launch,
+              color: Theme.of(context).primaryColor,
+            ),
+            subtitle: Text("Odd Sem 2020"),
             leading: Icon(FontAwesomeIcons.artstation),
             onTap: () => launch(
                 "http://juadmission.jdvu.ac.in/jums_exam/Reports/2020/Odd/Arts_Odd_Sem_2020_Routine.pdf"),

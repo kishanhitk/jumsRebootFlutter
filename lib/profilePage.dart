@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
+import 'package:jumsRebootFlutter/exam_schedules_page.dart';
 import 'package:jumsRebootFlutter/loginPage.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
@@ -384,8 +385,8 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             onTap: () {
-              launch(
-                  'https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (cotext) => ExamSchedule()));
             },
             title: Text("Exam Schedules"),
           ),
