@@ -151,10 +151,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return Dialog(
-                                              child: SizedBox(
-                                                  height: 150,
-                                                  width: 150,
+                                          return AlertDialog(
+                                              contentPadding: EdgeInsets.all(0),
+                                              titlePadding:
+                                                  EdgeInsets.only(top: 30),
+                                              title: Center(
+                                                child: Text(
+                                                    "Downloading Admit Card."),
+                                              ),
+                                              useMaterialBorderRadius: true,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              content: SizedBox(
+                                                  height: 300,
                                                   child: MyLoading()));
                                         },
                                       );
@@ -181,10 +191,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                       showDialog(
                                         context: context,
                                         builder: (context) {
-                                          return Dialog(
-                                              child: SizedBox(
-                                                  height: 150,
-                                                  width: 150,
+                                          return AlertDialog(
+                                              contentPadding: EdgeInsets.all(0),
+                                              titlePadding:
+                                                  EdgeInsets.only(top: 30),
+                                              title: Center(
+                                                child: Text(
+                                                    "Downloading Grade Card."),
+                                              ),
+                                              useMaterialBorderRadius: true,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                              content: SizedBox(
+                                                  height: 300,
                                                   child: MyLoading()));
                                         },
                                       );
