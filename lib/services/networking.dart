@@ -45,7 +45,7 @@ class Networking {
       var user = User.fromJson(json.decode(serverResponse));
       saveToDb(user);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => ProfilePage(
