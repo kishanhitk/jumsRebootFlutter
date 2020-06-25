@@ -33,60 +33,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   String serverResponse;
-  // void saveToDb(User user) async {
-  //   final String encodedData = SemButtons.encodeButtons(user.buttons);
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('uname', uname);
-  //   prefs.setString('pass', pass);
-  //   prefs.setString('buttons', encodedData);
-  //   prefs.setString('name', user.name);
-  //   prefs.setString('course', user.course);
-  //   prefs.setString('imgUrl', user.imgUrl);
-  // }
-
-  // submit() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   print(uname);
-  //   print(pass);
-  //   Response response = await post(
-  //     "https://ancient-waters-86273.herokuapp.com/",
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, String>{'uname': uname, 'pass': pass}),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       serverResponse = response.body;
-  //     });
-  //     var user = User.fromJson(json.decode(serverResponse));
-  //     saveToDb(user);
-  //     print(user.buttons);
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => ProfilePage(
-  //           user: user,
-  //           pass: pass,
-  //           uname: uname,
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     showDialog(
-  //       context: context,
-  //       builder: (context) => LoginErrorDialog(),
-  //     );
-  //   }
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
