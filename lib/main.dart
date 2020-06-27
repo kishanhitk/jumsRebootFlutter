@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
@@ -20,11 +19,7 @@ Future<void> main() async {
     String imgUrl = prefs.getString('imgUrl');
     List<SemButtons> butons =
         SemButtons.decodeButtons(prefs.getString('buttons'));
-    user = User(
-        name: name,
-        course: course,
-        imgUrl: imgUrl,
-        buttons: butons);
+    user = User(name: name, course: course, imgUrl: imgUrl, buttons: butons);
   }
   print(uname);
   runApp(MyApp(
@@ -43,6 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "JUMS Reboot",
       theme: ThemeData(
         primaryColor: Color(
           0xff304ffe,
