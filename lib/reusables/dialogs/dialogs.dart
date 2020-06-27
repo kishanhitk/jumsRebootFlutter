@@ -51,7 +51,7 @@ class AdmitCardErrorDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text("⚫ $this card for this semester is not available yet."),
+            title: Text("⚫ $type card for this semester is not available yet."),
           ),
           ListTile(
             title: Text("⚫ Original JUMS Website is down."),
