@@ -15,6 +15,7 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:jumsRebootFlutter/notification.dart';
+import 'package:jumsRebootFlutter/pdfPage.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
@@ -508,35 +509,3 @@ class AdmitCardErrorDialog extends StatelessWidget {
   }
 }
 
-class PDFScreen extends StatelessWidget {
-  final String pathPDF;
-  PDFScreen(this.pathPDF);
-
-  @override
-  Widget build(BuildContext context) {
-    return PDFViewerScaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(CupertinoIcons.back,
-                  color: Theme.of(context).primaryColor),
-              onPressed: () => Navigator.pop(context)),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          title: Text("Document",
-              style: TextStyle(color: Theme.of(context).primaryColor)),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.share,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {
-                ShareExtend.share(pathPDF, "file");
-              },
-            ),
-          ],
-        ),
-        path: pathPDF);
-  }
-}
