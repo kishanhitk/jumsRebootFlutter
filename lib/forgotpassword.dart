@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:jumsRebootFlutter/services/networking.dart';
 
 class ForgotPassword extends StatefulWidget {
   @override
@@ -16,39 +18,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   String newPasswordText = ' ';
-  submit() async {
-    setState(() {
-      isLoading = true;
-    });
-    print(uname);
-    print(phone);
-    Response response = await post(
-      "https://ancient-waters-86273.herokuapp.com/forgotPassword",
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{'uname': uname, 'mobile': phone}),
-    );
-    if (response.statusCode == 200) {
-      print(response.body);
-
-      setState(() {
-        newPasswordText = response.body;
-      });
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: SelectableText(newPasswordText),
-                content: Text("Long press password to copy."),
-              ));
-    } else {
-      showDialog(
-          context: context, builder: (context) => ForgotPassErrorDialog());
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,11 +133,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   color: Color(
                                     0xff304ffe,
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKey.currentState.validate()) {
                                       print(uname);
                                       print(phone);
-                                      submit();
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await Networking(uname, null)
+                                          .resetPassword(uname, phone, context);
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                     }
                                   },
                                   child: Padding(
@@ -219,43 +195,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
               ),
       ),
-    );
-  }
-}
-
-class ForgotPassErrorDialog extends StatelessWidget {
-  const ForgotPassErrorDialog({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Something Went Wrong.\nPossible Reasons:-"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text("⚫ You entered a wrong roll number."),
-          ),
-          ListTile(
-            title: Text("⚫ You entered a wrong mobile number."),
-          ),
-          ListTile(
-            title: Text("⚫ Original JUMS website is down."),
-          ),
-          ListTile(
-            title: Text("⚫ Our server is down."),
-          ),
-        ],
-      ),
-      actions: [
-        FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text("Dismiss"))
-      ],
     );
   }
 }

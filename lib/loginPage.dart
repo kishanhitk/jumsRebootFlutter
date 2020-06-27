@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                                         isLoading = true;
                                       });
                                       await Networking(pass, uname)
-                                          .submit(context);
+                                          .login(context);
                                       setState(() {
                                         isLoading = false;
                                       });

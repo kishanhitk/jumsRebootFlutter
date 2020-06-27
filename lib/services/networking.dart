@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
+import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,9 +14,6 @@ class Networking {
   final String pass;
 
   Networking(this.pass, this.uname);
-  something() {
-    print("THIS IS WORKING NOW.");
-  }
 
   void saveToDb(User user) async {
     final String encodedData = SemButtons.encodeButtons(user.buttons);
@@ -28,7 +26,7 @@ class Networking {
     prefs.setString('imgUrl', user.imgUrl);
   }
 
-  submit(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     print(uname);
     print(pass);
     String serverResponse;
@@ -60,6 +58,32 @@ class Networking {
         context: context,
         builder: (context) => LoginErrorDialog(),
       );
+    }
+  }
+
+  Future<void> resetPassword(
+      String uname, String phone, BuildContext context) async {
+    Response response = await post(
+      "https://ancient-waters-86273.herokuapp.com/forgotPassword",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{'uname': uname, 'mobile': phone}),
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+
+      String newPasswordText = response.body;
+
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: SelectableText(newPasswordText),
+                content: Text("Long press password to copy."),
+              ));
+    } else {
+      showDialog(
+          context: context, builder: (context) => ForgotPassErrorDialog());
     }
   }
 }
