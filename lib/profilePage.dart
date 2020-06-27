@@ -18,6 +18,7 @@ import 'package:jumsRebootFlutter/notification.dart';
 import 'package:jumsRebootFlutter/pdfPage.dart';
 import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:jumsRebootFlutter/services/networking.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
@@ -170,10 +171,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   child: MyLoading()));
                                         },
                                       );
-                                      downloadAdmitCard(
-                                        widget.user.buttons[index].link,
-                                        widget.user.buttons[index].text,
-                                      );
+                                      Networking(widget.pass, widget.uname)
+                                          .downloadAdmitCard(
+                                              widget.user.buttons[index].link,
+                                              widget.user.buttons[index].text,
+                                              context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
@@ -210,10 +212,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   child: MyLoading()));
                                         },
                                       );
-                                      downloadGradeCard(
-                                        widget.user.buttons[index].link,
-                                        widget.user.buttons[index].text,
-                                      );
+                                      Networking(widget.pass, widget.uname)
+                                          .downloadGradeCard(
+                                              widget.user.buttons[index].link,
+                                              widget.user.buttons[index].text,
+                                              context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
@@ -242,117 +245,62 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void downloadAdmitCard(String link, String text) async {
-    String dir = (await getExternalStorageDirectory()).path;
-    print(dir);
-    bool exists = await File('$dir/${widget.uname}Admit$text.pdf').exists();
-    setState(() {
-      isLoading = true;
-    });
-    print(widget.pass);
-    print(link);
-    print(widget.uname);
-    if (exists) {
-      print("FIle Already exist");
-      Navigator.pop(context);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  PDFScreen(File('$dir/${widget.uname}Admit$text.pdf').path)));
-    } else {
-      Response response = await post(
-        "https://ancient-waters-86273.herokuapp.com/admitCard",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'uname': widget.uname,
-          'pass': widget.pass,
-          'url': link
-        }),
-      );
-      if (response.statusCode == 200) {
-        var bytes = response.bodyBytes;
-        print(bytes);
+  // void downloadAdmitCard(String link, String text) async {
+  //   String dir = (await getExternalStorageDirectory()).path;
+  //   print(dir);
+  //   bool exists = await File('$dir/${widget.uname}Admit$text.pdf').exists();
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   print(widget.pass);
+  //   print(link);
+  //   print(widget.uname);
+  //   if (exists) {
+  //     print("FIle Already exist");
+  //     Navigator.pop(context);
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) =>
+  //                 PDFScreen(File('$dir/${widget.uname}Admit$text.pdf').path)));
+  //   } else {
+  //     Response response = await post(
+  //       "https://ancient-waters-86273.herokuapp.com/admitCard",
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonEncode(<String, String>{
+  //         'uname': widget.uname,
+  //         'pass': widget.pass,
+  //         'url': link
+  //       }),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       var bytes = response.bodyBytes;
+  //       print(bytes);
 
-        File file = new File('$dir/${widget.uname}Admit$text.pdf');
-        await file.writeAsBytes(bytes);
-        Navigator.pop(context);
+  //       File file = new File('$dir/${widget.uname}Admit$text.pdf');
+  //       await file.writeAsBytes(bytes);
+  //       Navigator.pop(context);
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
-      } else {
-        Navigator.pop(context);
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AdmitCardErrorDialog(
-                type: "Admit",
-              );
-            });
-      }
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
+  //       Navigator.push(context,
+  //           MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
+  //     } else {
+  //       Navigator.pop(context);
+  //       showDialog(
+  //           context: context,
+  //           builder: (context) {
+  //             return AdmitCardErrorDialog(
+  //               type: "Admit",
+  //             );
+  //           });
+  //     }
+  //   }
+  //   setState(() {
+  //     isLoading = false;
+  //   });
+  // }
 
-  void downloadGradeCard(String link, String text) async {
-    String dir = (await getExternalStorageDirectory()).path;
-    print(dir);
-    bool exists = await File('$dir/${widget.uname}Grade$text.pdf').exists();
-    setState(() {
-      isLoading = true;
-    });
-    print(widget.pass);
-    print(link);
-    print(widget.uname);
-    if (exists) {
-      print("FIle Already exist");
-      Navigator.pop(context);
-
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  PDFScreen(File('$dir/${widget.uname}Grade$text.pdf').path)));
-    } else {
-      Response response = await post(
-        "https://ancient-waters-86273.herokuapp.com/gradeCard",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'uname': widget.uname,
-          'pass': widget.pass,
-          'url': link
-        }),
-      );
-      if (response.statusCode == 200) {
-        var bytes = response.bodyBytes;
-        print(bytes);
-
-        File file = new File('$dir/${widget.uname}Grade$text.pdf');
-        await file.writeAsBytes(bytes);
-        Navigator.pop(context);
-
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
-      } else {
-        Navigator.pop(context);
-
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AdmitCardErrorDialog(type: "Grade");
-            });
-      }
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
 }
 
 class MyDrawer extends StatefulWidget {
@@ -366,10 +314,10 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
+    appName: 'JUMS Reboot',
+    packageName: 'com.kishans.jumsRebootFlutter',
+    version: 'v1.0',
+    buildNumber: '1',
   );
   @override
   void initState() {

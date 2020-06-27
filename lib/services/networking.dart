@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
+import 'package:jumsRebootFlutter/pdfPage.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
 import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/database.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Networking {
@@ -89,5 +92,104 @@ class Networking {
     List<String> noticeList = List<String>.from(temp);
     prefs.setStringList('notices', noticeList);
     return noticeList;
+  }
+
+  Future<void> downloadAdmitCard(
+      String link, String text, BuildContext context) async {
+    String dir = (await getExternalStorageDirectory()).path;
+    print(dir);
+    bool exists = await File('$dir/${uname}Admit$text.pdf').exists();
+
+    print(pass);
+    print(link);
+    print(uname);
+    if (exists) {
+      print("FIle Already exist");
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PDFScreen(File('$dir/${uname}Admit$text.pdf').path)));
+    } else {
+      Response response = await post(
+        "https://ancient-waters-86273.herokuapp.com/admitCard",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            <String, String>{'uname': uname, 'pass': pass, 'url': link}),
+      );
+      if (response.statusCode == 200) {
+        var bytes = response.bodyBytes;
+        print(bytes);
+
+        File file = new File('$dir/${uname}Admit$text.pdf');
+        await file.writeAsBytes(bytes);
+        Navigator.pop(context);
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
+      } else {
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AdmitCardErrorDialog(
+                type: "Admit",
+              );
+            });
+      }
+    }
+  }
+
+  Future<void> downloadGradeCard(
+      String link, String text, BuildContext context) async {
+    String dir = (await getExternalStorageDirectory()).path;
+    print(dir);
+    bool exists = await File('$dir/${uname}Grade$text.pdf').exists();
+
+    print(pass);
+    print(link);
+    print(uname);
+    if (exists) {
+      print("FIle Already exist");
+      Navigator.pop(context);
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PDFScreen(File('$dir/${uname}Grade$text.pdf').path)));
+    } else {
+      Response response = await post(
+        "https://ancient-waters-86273.herokuapp.com/gradeCard",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+            <String, String>{'uname': uname, 'pass': pass, 'url': link}),
+      );
+      if (response.statusCode == 200) {
+        var bytes = response.bodyBytes;
+        print(bytes);
+
+        File file = new File('$dir/${uname}Grade$text.pdf');
+        await file.writeAsBytes(bytes);
+        Navigator.pop(context);
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PDFScreen(file.path)));
+      } else {
+        Navigator.pop(context);
+
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AdmitCardErrorDialog(type: "Grade");
+            });
+      }
+    }
+    
   }
 }
