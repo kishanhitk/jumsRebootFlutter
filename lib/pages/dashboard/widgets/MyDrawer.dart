@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jumsRebootFlutter/pages/examSchedulePage/exam_schedules_page.dart';
@@ -95,8 +94,13 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           ListTile(
             onTap: () {
-              Share.share(
-                  "Hey!\nTry out this app for JUMS results.\nJUMS Reboot-\nhttps://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter");
+              Share.share("""
+Hey!\n
+Try out this awesome app for JUMS results.\n
+JUMS Reboot-\n
+https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter \n
+It also sends notification about new result announcements.""",
+                  subject: "JUMS Reboot is here.");
             },
             title: Text("Share app with friends"),
           ),
