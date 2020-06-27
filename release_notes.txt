@@ -1,2 +1,11 @@
-- Minor UI fixes.
-- Performace improvements.
+Thank you for using JUMS Reboot!
+Here is what's new in this release:
+**Features**
+- Now get exam routines directly in the app for Arts and Engineering.
+- Get interesting facts while loading.
+
+**Improvements**
+- Rearranged options in the drawer for better UX.
+
+**Bug Fixes**
+- Fixed a bug in Navigator on login.
