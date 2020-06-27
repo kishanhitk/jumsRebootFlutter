@@ -14,7 +14,7 @@ import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_plugin.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
-import 'package:jumsRebootFlutter/notificcations.dart';
+import 'package:jumsRebootFlutter/notification.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
