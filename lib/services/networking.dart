@@ -7,6 +7,7 @@ import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/profilePage.dart';
 import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:jumsRebootFlutter/services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Networking {
@@ -14,17 +15,6 @@ class Networking {
   final String pass;
 
   Networking(this.pass, this.uname);
-
-  void saveToDb(User user) async {
-    final String encodedData = SemButtons.encodeButtons(user.buttons);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('uname', uname);
-    prefs.setString('pass', pass);
-    prefs.setString('buttons', encodedData);
-    prefs.setString('name', user.name);
-    prefs.setString('course', user.course);
-    prefs.setString('imgUrl', user.imgUrl);
-  }
 
   Future<void> login(BuildContext context) async {
     print(uname);
@@ -41,7 +31,7 @@ class Networking {
       serverResponse = response.body;
 
       var user = User.fromJson(json.decode(serverResponse));
-      saveToDb(user);
+      Database().saveToDb(user, uname, pass);
 
       Navigator.pushReplacement(
         context,

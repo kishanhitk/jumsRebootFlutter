@@ -109,11 +109,6 @@ class _NotificationPageState extends State<NotificationPage> {
                             ),
                           ),
                         ),
-                        // Divider(
-                        //   indent: 30,
-                        //   color: Theme.of(context).primaryColor,
-                        //   thickness: 0.3,
-                        // )
                       ],
                     );
                   },

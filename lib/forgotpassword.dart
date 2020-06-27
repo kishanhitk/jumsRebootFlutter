@@ -158,35 +158,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 ),
                               ),
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: Container(
-                            //     width: MediaQuery.of(context).size.width * 0.9,
-                            //     decoration: BoxDecoration(
-                            //         color: Theme.of(context).primaryColor,
-                            //         borderRadius: BorderRadius.circular(30)),
-                            //     child: Material(
-                            //       color: Colors.transparent,
-                            //       child: InkWell(
-                            //         onTap: () {
-                            //           if (_formKey.currentState.validate()) {
-                            //             print(uname);
-                            //             print(phone);
-                            //             submit();
-                            //           }
-                            //         },
-                            //         child: Padding(
-                            //           padding: const EdgeInsets.all(15.0),
-                            //           child: Center(
-                            //               child: Text(
-                            //             "Reset Password",
-                            //             style: TextStyle(color: Colors.white),
-                            //           )),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                      
                           ],
                         ),
                       ),
