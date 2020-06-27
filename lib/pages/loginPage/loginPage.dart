@@ -37,7 +37,14 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/logo_trans.png'),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minHeight: 100 ?? MediaQuery.of(context).size.width,
+                            maxHeight: 400),
+                        child: Image.asset(
+                          'assets/logo_trans.png',
+                        ),
+                      ),
                       Form(
                         key: _formKey,
                         child: Column(
