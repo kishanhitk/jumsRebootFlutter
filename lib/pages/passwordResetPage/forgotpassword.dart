@@ -1,52 +1,51 @@
-import 'dart:io';
-import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:jumsRebootFlutter/forgotpassword.dart';
-import 'package:jumsRebootFlutter/models/semsterButtons.dart';
-import 'package:jumsRebootFlutter/models/user.dart';
-import 'package:jumsRebootFlutter/profilePage.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/networking.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String uname = "001811601047";
-  String pass = '158261ed';
-  String url;
-  bool isLoading = false;
-  bool _isObscureText = true;
-  void toggle() {
-    setState(() {
-      _isObscureText = !_isObscureText;
-    });
-  }
-
+class _ForgotPasswordState extends State<ForgotPassword> {
+  String uname;
+  String phone;
   final _formKey = GlobalKey<FormState>();
-
-  String serverResponse;
+  bool isLoading = false;
+  String newPasswordText = ' ';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white ?? Color(0xff323D4E),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        centerTitle: true,
+        title: Text(
+          "Reset Password",
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
+      ),
       body: Center(
-        child: Container(
-          child: isLoading
-              ? MyLoading()
-              : SingleChildScrollView(
+        child: isLoading
+            ? MyLoading()
+            : SingleChildScrollView(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/logo_trans.png'),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Container(
+                            height: 300,
+                            child: Hero(
+                                tag: "FOR",
+                                child: Image.asset('assets/forgot.png'))),
+                      ),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -58,16 +57,18 @@ class _LoginPageState extends State<LoginPage> {
                               child: TextFormField(
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return "Enter your roll no.";
+                                    return "Please enter your complete Roll No.";
                                   } else
                                     return null;
                                 },
                                 decoration: InputDecoration(
-                                    filled: true,
-                                    hintText: "University Roll No.",
                                     fillColor: Color(
                                       0x11304ffe,
                                     ),
+                                    labelText: "University Roll No.",
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    filled: true,
                                     prefixIcon: Icon(
                                       Icons.person,
                                     ),
@@ -89,55 +90,33 @@ class _LoginPageState extends State<LoginPage> {
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "Enter your password";
-                                  } else
+                                  if (value.length != 10)
+                                    return "Mobile number should be 10 digits.";
+                                  else
                                     return null;
                                 },
-                                obscureText: _isObscureText,
                                 decoration: InputDecoration(
                                     fillColor: Color(
                                       0x11304ffe,
                                     ),
                                     filled: true,
-                                    hintText: "Password",
+                                    labelText: "Phone Number",
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
                                     prefixIcon: Icon(
-                                      Icons.lock,
+                                      Icons.phone,
                                     ),
-                                    suffixIcon: IconButton(
-                                        icon: Icon(!_isObscureText
-                                            ? Icons.visibility
-                                            : Icons.visibility_off),
-                                        onPressed: () {
-                                          toggle();
-                                        }),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(50),
                                     )),
+                                keyboardType: TextInputType.phone,
                                 onChanged: (val) {
                                   setState(() {
-                                    pass = val;
+                                    phone = val;
                                   });
                                   print(val);
                                 },
-                              ),
-                            ),
-                            Hero(
-                              tag: "FOR",
-                              child: FlatButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ForgotPassword()));
-                                },
-                                child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
                               ),
                             ),
                             Padding(
@@ -153,11 +132,13 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
+                                      print(uname);
+                                      print(phone);
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      await Networking(pass, uname)
-                                          .login(context);
+                                      await Networking(uname, null)
+                                          .resetPassword(uname, phone, context);
                                       setState(() {
                                         isLoading = false;
                                       });
@@ -165,22 +146,23 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
+                                        vertical: 15.0),
                                     child: Text(
-                                      "Login",
+                                      "Reset Password",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
                               ),
-                            )
+                            ),
+                      
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-        ),
+              ),
       ),
     );
   }

@@ -1,54 +1,43 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
+import 'package:jumsRebootFlutter/pages/passwordResetPage/forgotpassword.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/networking.dart';
 
-class ForgotPassword extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
-  String uname;
-  String phone;
-  final _formKey = GlobalKey<FormState>();
+class _LoginPageState extends State<LoginPage> {
+  String uname = "001811601047";
+  String pass = '158261ed';
+  String url;
   bool isLoading = false;
-  String newPasswordText = ' ';
+  bool _isObscureText = true;
+  void toggle() {
+    setState(() {
+      _isObscureText = !_isObscureText;
+    });
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  String serverResponse;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-        centerTitle: true,
-        title: Text(
-          "Reset Password",
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-      ),
+      backgroundColor: Colors.white ?? Color(0xff323D4E),
       body: Center(
-        child: isLoading
-            ? MyLoading()
-            : SingleChildScrollView(
-                child: Center(
+        child: Container(
+          child: isLoading
+              ? MyLoading()
+              : SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 50.0),
-                        child: Container(
-                            height: 300,
-                            child: Hero(
-                                tag: "FOR",
-                                child: Image.asset('assets/forgot.png'))),
-                      ),
+                      Image.asset('assets/logo_trans.png'),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -60,18 +49,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               child: TextFormField(
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return "Please enter your complete Roll No.";
+                                    return "Enter your roll no.";
                                   } else
                                     return null;
                                 },
                                 decoration: InputDecoration(
+                                    filled: true,
+                                    hintText: "University Roll No.",
                                     fillColor: Color(
                                       0x11304ffe,
                                     ),
-                                    labelText: "University Roll No.",
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    filled: true,
                                     prefixIcon: Icon(
                                       Icons.person,
                                     ),
@@ -93,33 +80,55 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value.length != 10)
-                                    return "Mobile number should be 10 digits.";
-                                  else
+                                  if (value.isEmpty) {
+                                    return "Enter your password";
+                                  } else
                                     return null;
                                 },
+                                obscureText: _isObscureText,
                                 decoration: InputDecoration(
                                     fillColor: Color(
                                       0x11304ffe,
                                     ),
                                     filled: true,
-                                    labelText: "Phone Number",
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
+                                    hintText: "Password",
                                     prefixIcon: Icon(
-                                      Icons.phone,
+                                      Icons.lock,
                                     ),
+                                    suffixIcon: IconButton(
+                                        icon: Icon(!_isObscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off),
+                                        onPressed: () {
+                                          toggle();
+                                        }),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                       borderRadius: BorderRadius.circular(50),
                                     )),
-                                keyboardType: TextInputType.phone,
                                 onChanged: (val) {
                                   setState(() {
-                                    phone = val;
+                                    pass = val;
                                   });
                                   print(val);
                                 },
+                              ),
+                            ),
+                            Hero(
+                              tag: "FOR",
+                              child: FlatButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ForgotPassword()));
+                                },
+                                child: Text(
+                                  "Forgot Password?",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
                               ),
                             ),
                             Padding(
@@ -135,13 +144,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      print(uname);
-                                      print(phone);
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      await Networking(uname, null)
-                                          .resetPassword(uname, phone, context);
+                                      await Networking(pass, uname)
+                                          .login(context);
                                       setState(() {
                                         isLoading = false;
                                       });
@@ -149,23 +156,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0),
+                                        vertical: 15),
                                     child: Text(
-                                      "Reset Password",
+                                      "Login",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                      
+                            )
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

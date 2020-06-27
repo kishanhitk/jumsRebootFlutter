@@ -1,11 +1,8 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
-import 'package:jumsRebootFlutter/loginPage.dart';
+import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
-import 'package:jumsRebootFlutter/profilePage.dart';
+import 'package:jumsRebootFlutter/pages/dashboard/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/user.dart';

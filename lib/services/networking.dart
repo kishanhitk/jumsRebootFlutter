@@ -3,10 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
-import 'package:jumsRebootFlutter/pdfPage.dart';
-import 'package:jumsRebootFlutter/profilePage.dart';
+import 'package:jumsRebootFlutter/pages/pdfPage/pdfPage.dart';
+import 'package:jumsRebootFlutter/pages/dashboard/dashboard.dart';
 import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/database.dart';
