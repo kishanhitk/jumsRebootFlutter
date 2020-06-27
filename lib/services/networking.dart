@@ -76,4 +76,18 @@ class Networking {
           context: context, builder: (context) => ForgotPassErrorDialog());
     }
   }
+
+  Future<List<String>> getNotices(
+      GlobalKey<RefreshIndicatorState> refreshKey) async {
+    var prefs = await SharedPreferences.getInstance();
+    refreshKey.currentState?.show();
+    Response response =
+        await get('https://ancient-waters-86273.herokuapp.com/notices');
+    var resBody = response.body;
+    var temp = json.decode(resBody)['notices'];
+
+    List<String> noticeList = List<String>.from(temp);
+    prefs.setStringList('notices', noticeList);
+    return noticeList;
+  }
 }

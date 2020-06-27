@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
+import 'package:jumsRebootFlutter/services/networking.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -17,21 +18,6 @@ class _NotificationPageState extends State<NotificationPage> {
   List<String> notices = [];
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
-  Future getNotices() async {
-    var prefs = await SharedPreferences.getInstance();
-    refreshKey.currentState?.show();
-    Response response =
-        await get('https://ancient-waters-86273.herokuapp.com/notices');
-    var resBody = response.body;
-    var temp = json.decode(resBody)['notices'];
-
-    List<String> noticeList = List<String>.from(temp);
-    prefs.setStringList('notices', noticeList);
-    setState(() {
-      notices = noticeList;
-    });
-  }
-
   Future checkNotices() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -40,8 +26,12 @@ class _NotificationPageState extends State<NotificationPage> {
       setState(() {
         notices = temp;
       });
-    } else
-      getNotices();
+    } else {
+      var temp = await Networking(null, null).getNotices(refreshKey);
+      setState(() {
+        notices = temp;
+      });
+    }
   }
 
   @override
@@ -56,7 +46,7 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xff304ffe),
-          onPressed: getNotices,
+          onPressed: () => Networking(null, null).getNotices(refreshKey),
           child: Icon(Icons.refresh),
         ),
         backgroundColor: Colors.white,
@@ -79,7 +69,7 @@ class _NotificationPageState extends State<NotificationPage> {
         body: notices.length != 0
             ? RefreshIndicator(
                 key: refreshKey,
-                onRefresh: getNotices,
+                onRefresh: () => Networking(null, null).getNotices(refreshKey),
                 child: ListView.builder(
                   itemCount: notices.length,
                   itemBuilder: (context, index) {
