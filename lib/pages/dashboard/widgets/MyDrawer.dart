@@ -116,7 +116,7 @@ It also sends notification about new result announcements.""",
                     borderRadius: BorderRadius.circular(10)),
                 color: Color(0x11304ffe),
                 onPressed: () {
-                  launch('https://www.linkedin.com/in/kishanju/');
+                  launch('https://kishanhitk.github.io');
                 },
                 child: Text(
                   "Kishan Kumar",
