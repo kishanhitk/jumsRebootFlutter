@@ -1,16 +1,11 @@
-# jumsRebootFlutter
 
-A new Flutter project.
+## JUMS Reboot
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+[![Codemagic build status](https://api.codemagic.io/apps/5ef616701aafca000f49d696/5ef616701aafca000f49d695/status_badge.svg)](https://codemagic.io/apps/5ef616701aafca000f49d696/5ef616701aafca000f49d695/latest_build)
+![enter image description here](https://img.shields.io/badge/Flutter-v.1.19.0.4.1.pre-blue)
+[
+![enter image description here](https://lh3.googleusercontent.com/cjsqrWQKJQp9RFO7-hJ9AfpKzbUb_Y84vXfjlP0iRHBvladwAfXih984olktDhPnFqyZ0nu9A5jvFwOEQPXzv7hr3ce3QVsLN8kQ2Ao=s0)](https://play.google.com/store/apps/details?id=com.kishans.jumsRebootFlutter)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Image](mockups/mockup.jpg)
