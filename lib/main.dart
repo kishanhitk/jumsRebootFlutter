@@ -21,7 +21,6 @@ Future<void> main() async {
         SemButtons.decodeButtons(prefs.getString('buttons'));
     user = User(name: name, course: course, imgUrl: imgUrl, buttons: butons);
   }
-  print(uname);
   runApp(MyApp(
       isLoggedIn: uname != null ? true : false,
       user: user,

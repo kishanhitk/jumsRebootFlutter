@@ -78,7 +78,6 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     uname = val;
                                   });
-                                  print(val);
                                 },
                               ),
                             ),
@@ -117,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     pass = val;
                                   });
-                                  print(val);
                                 },
                               ),
                             ),

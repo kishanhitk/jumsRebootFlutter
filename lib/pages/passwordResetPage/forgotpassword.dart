@@ -81,7 +81,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   setState(() {
                                     uname = val;
                                   });
-                                  print(val);
                                 },
                               ),
                             ),
@@ -115,7 +114,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   setState(() {
                                     phone = val;
                                   });
-                                  print(val);
                                 },
                               ),
                             ),
@@ -132,8 +130,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   ),
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      print(uname);
-                                      print(phone);
                                       setState(() {
                                         isLoading = true;
                                       });

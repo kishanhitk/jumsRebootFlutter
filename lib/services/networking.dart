@@ -19,8 +19,6 @@ class Networking {
   Networking(this.pass, this.uname);
 
   Future<void> login(BuildContext context) async {
-    print(uname);
-    print(pass);
     String serverResponse;
     Response response = await post(
       "https://ancient-waters-86273.herokuapp.com/",
@@ -63,8 +61,6 @@ class Networking {
       body: jsonEncode(<String, String>{'uname': uname, 'mobile': phone}),
     );
     if (response.statusCode == 200) {
-      print(response.body);
-
       String newPasswordText = response.body;
 
       showDialog(
@@ -96,14 +92,9 @@ class Networking {
   Future<void> downloadAdmitCard(
       String link, String text, BuildContext context) async {
     String dir = (await getExternalStorageDirectory()).path;
-    print(dir);
     bool exists = await File('$dir/${uname}Admit$text.pdf').exists();
 
-    print(pass);
-    print(link);
-    print(uname);
     if (exists) {
-      print("FIle Already exist");
       Navigator.pop(context);
       Navigator.push(
           context,
@@ -121,7 +112,6 @@ class Networking {
       );
       if (response.statusCode == 200) {
         var bytes = response.bodyBytes;
-        print(bytes);
 
         File file = new File('$dir/${uname}Admit$text.pdf');
         await file.writeAsBytes(bytes);
@@ -145,14 +135,9 @@ class Networking {
   Future<void> downloadGradeCard(
       String link, String text, BuildContext context) async {
     String dir = (await getExternalStorageDirectory()).path;
-    print(dir);
     bool exists = await File('$dir/${uname}Grade$text.pdf').exists();
 
-    print(pass);
-    print(link);
-    print(uname);
     if (exists) {
-      print("FIle Already exist");
       Navigator.pop(context);
 
       Navigator.push(
@@ -171,7 +156,6 @@ class Networking {
       );
       if (response.statusCode == 200) {
         var bytes = response.bodyBytes;
-        print(bytes);
 
         File file = new File('$dir/${uname}Grade$text.pdf');
         await file.writeAsBytes(bytes);
@@ -189,6 +173,5 @@ class Networking {
             });
       }
     }
-    
   }
 }
