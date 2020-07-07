@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
               })
         ],
         title: Text(
-          "Profile",
+          "Dashboard",
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
       ),

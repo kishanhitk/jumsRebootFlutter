@@ -64,7 +64,7 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (cotext) => ExamSchedule()));
             },
-            title: Text("Exam Schedules"),
+            title: Text("Exam Routines"),
           ),
           ListTile(
             onTap: () {
