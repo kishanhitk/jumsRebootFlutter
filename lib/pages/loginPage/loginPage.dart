@@ -10,8 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String uname = "001811601047";
-  String pass = '158261ed';
+  String uname ;
+  String pass ;
   String url;
   bool isLoading = false;
   bool _isObscureText = true;
