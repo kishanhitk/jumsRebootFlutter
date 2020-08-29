@@ -152,7 +152,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 child: Text(
                                                     "Downloading Admit Card."),
                                               ),
-                                              useMaterialBorderRadius: true,
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
@@ -193,7 +192,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 child: Text(
                                                     "Downloading Grade Card."),
                                               ),
-                                              useMaterialBorderRadius: true,
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(8)),

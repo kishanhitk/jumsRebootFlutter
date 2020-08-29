@@ -1,8 +1,8 @@
 Thank you for using JUMS Reboot!
 Here is what's new in this release:
-**Features**
-- Now get exam routines directly in the app for Arts and Engineering.
-- Get interesting facts while loading.
 
 **Bug Fixes**
-- Fixed a major UI bug in Dashboard where longer name was getting cut on smaller devices.
+- Fixed: Notices not refreshing on pulling or tapping refresh button.
+
+**Features**
+- Added more facts.

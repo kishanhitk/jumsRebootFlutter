@@ -41,7 +41,13 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xff304ffe),
-          onPressed: () => Networking(null, null).getNotices(refreshKey),
+          onPressed: () async {
+            var notices = await Networking(null, null).getNotices(refreshKey);
+            this.setState(() {
+              notices = notices;
+            });
+            print("Notices Fetched");
+          },
           child: Icon(Icons.refresh),
         ),
         backgroundColor: Colors.white,
@@ -64,7 +70,14 @@ class _NotificationPageState extends State<NotificationPage> {
         body: notices.length != 0
             ? RefreshIndicator(
                 key: refreshKey,
-                onRefresh: () => Networking(null, null).getNotices(refreshKey),
+                onRefresh: () async {
+                  var notices =
+                      await Networking(null, null).getNotices(refreshKey);
+                  this.setState(() {
+                    notices = notices;
+                  });
+                  print("Notices Fetched");
+                },
                 child: ListView.builder(
                   itemCount: notices.length,
                   itemBuilder: (context, index) {
