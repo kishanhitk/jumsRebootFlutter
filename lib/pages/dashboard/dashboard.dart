@@ -203,8 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
-                                              content: SizedBox(
-                                                  height: 300,
+                                              content: SingleChildScrollView(
                                                   child: MyLoading()));
                                         },
                                       );

@@ -60,6 +60,9 @@ class MyLoading extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
+            ),
+            SizedBox(
+              height: 20,
             )
           ],
         )
