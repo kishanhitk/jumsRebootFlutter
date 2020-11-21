@@ -1,8 +1,9 @@
 Thank you for using JUMS Reboot!
 Here is what's new in this release:
 
-**Bug Fixes**
-- Fixed: Notices not refreshing on pulling or tapping refresh button.
-
 **Features**
+- Added In-App Updates.
 - Added more facts.
+
+**Bug Fixes**
+- Fixed: Text overflow in loading dialog.
