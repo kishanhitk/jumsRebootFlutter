@@ -13,10 +13,10 @@ class Updater {
     print("UPDATE INFO IS $updateInfo");
     if (updateInfo.updateAvailable) {
       if (updateInfo.flexibleUpdateAllowed) {
-        await InAppUpdate.performImmediateUpdate();
+        await InAppUpdate.startFlexibleUpdate();
         await InAppUpdate.completeFlexibleUpdate();
       } else if (updateInfo.immediateUpdateAllowed) {
-        await InAppUpdate.startFlexibleUpdate();
+        await InAppUpdate.performImmediateUpdate();
       }
     } else {
       print("No Update available");
