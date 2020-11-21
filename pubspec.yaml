@@ -23,25 +23,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.12.1
-  flutter_full_pdf_viewer: ^1.0.6
-  path_provider: ^1.6.10
-  font_awesome_flutter: ^8.8.1
-  share: ^0.6.4+3
-  share_extend: ^1.1.7
-  google_fonts: ^1.1.0
-  flutter_spinkit: ^4.1.2+1
-  shared_preferences: ^0.5.7+3
-  cached_network_image: ^2.2.0+1
-  loading_overlay: ^0.2.1
-  firebase_messaging: ^6.0.16
-  url_launcher: ^5.4.11
-  package_info: ^0.4.1
-  url_launcher_web: ^0.1.1+6
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  cached_network_image: ^2.3.3
   cupertino_icons: ^0.1.3
+  firebase_messaging: ^7.0.3
+  flutter_full_pdf_viewer: ^1.0.6
+  firebase_core: "0.5.2"
+  flutter_spinkit: ^4.1.2+1
+  font_awesome_flutter: ^8.10.0
+  google_fonts: ^1.1.1
+  http: ^0.12.2
+  in_app_update: ^1.1.14
+  loading_overlay: ^0.2.1
+  package_info: ^0.4.3+2
+  path_provider: ^1.6.24
+  share: ^0.6.5+4
+  share_extend: ^1.1.9
+  shared_preferences: ^0.5.12+4
+  url_launcher: ^5.7.10
+  url_launcher_web: ^0.1.5+1
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +48,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is

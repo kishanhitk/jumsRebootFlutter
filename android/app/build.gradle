@@ -52,6 +52,7 @@ android {
         applicationId "com.kishans.jumsRebootFlutter"
         minSdkVersion 16
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -84,4 +85,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
     implementation 'com.google.firebase:firebase-perf:19.0.7'
     implementation 'com.google.firebase:firebase-messaging:20.2.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }

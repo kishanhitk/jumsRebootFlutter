@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
@@ -88,6 +87,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
+                                autofillHints: [AutofillHints.telephoneNumber],
                                 validator: (value) {
                                   if (value.length != 10)
                                     return "Mobile number should be 10 digits.";
@@ -151,7 +151,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 ),
                               ),
                             ),
-                      
                           ],
                         ),
                       ),

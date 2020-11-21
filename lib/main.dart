@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/pages/dashboard/dashboard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
 
 import 'models/user.dart';
 
@@ -29,11 +30,11 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  bool isLoggedIn = false;
-  User user;
-  String uname;
-  String pass;
-  MyApp({this.isLoggedIn, this.user, this.pass, this.uname});
+  final bool isLoggedIn;
+  final User user;
+  final String uname;
+  final String pass;
+  MyApp({@required this.isLoggedIn, this.user, this.pass, this.uname});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

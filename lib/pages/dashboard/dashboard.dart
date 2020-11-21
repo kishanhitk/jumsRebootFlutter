@@ -7,6 +7,7 @@ import 'package:jumsRebootFlutter/pages/notificationPage/notification.dart';
 import 'package:jumsRebootFlutter/pages/dashboard/widgets/MyDrawer.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/networking.dart';
+import 'package:jumsRebootFlutter/services/updater.dart';
 
 class ProfilePage extends StatefulWidget {
   final User user;
@@ -21,6 +22,13 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isLoading = true;
   final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Updater.performInAppUpdate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
