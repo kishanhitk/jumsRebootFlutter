@@ -6,4 +6,5 @@ Here is what's new in this release:
 - Added more facts.
 
 **Bug Fixes**
+- Fixed: Blurry splash screen on some devices.
 - Fixed: Text overflow in loading dialog.
