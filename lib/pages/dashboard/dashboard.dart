@@ -2,24 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/pages/notificationPage/notification.dart';
 import 'package:jumsRebootFlutter/pages/dashboard/widgets/MyDrawer.dart';
 import 'package:jumsRebootFlutter/reusables/widgets.dart';
 import 'package:jumsRebootFlutter/services/networking.dart';
 import 'package:jumsRebootFlutter/services/updater.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatefulWidget {
-  final User user;
-  final String uname;
-  final String pass;
-
-  ProfilePage({this.user, this.pass, this.uname});
+class Dashboard extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _DashboardState extends State<Dashboard> {
+  var pass;
+  var uname;
+  User user;
   bool isLoading = true;
   final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -27,6 +27,29 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     Updater.performInAppUpdate();
+    getDataFromDB();
+  }
+
+  getDataFromDB() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var unameFromDB = prefs.getString('uname');
+    var passFromDB;
+    User userFromDB;
+    if (unameFromDB != null) {
+      passFromDB = prefs.getString('pass');
+      String name = prefs.getString('name');
+      String course = prefs.getString('course');
+      String imgUrl = prefs.getString('imgUrl');
+      List<SemButtons> buttons =
+          SemButtons.decodeButtons(prefs.getString('buttons'));
+      userFromDB =
+          User(name: name, course: course, imgUrl: imgUrl, buttons: buttons);
+      this.setState(() {
+        pass = passFromDB;
+        uname = unameFromDB;
+        user = userFromDB;
+      });
+    }
   }
 
   @override
@@ -76,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: CachedNetworkImage(
-                          imageUrl: widget.user.imgUrl,
+                          imageUrl: user.imgUrl,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -89,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
-                          widget.user.name,
+                          user.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 25),
                         ),
@@ -97,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 3, bottom: 10),
                         child: Text(
-                          widget.user.course,
+                          user.course,
                           textAlign: TextAlign.center,
                         ),
                       )
@@ -110,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Expanded(
             flex: 2,
             child: ListView.builder(
-              itemCount: widget.user.buttons.length,
+              itemCount: user.buttons.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -129,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Text(
-                              widget.user.buttons[index].text,
+                              user.buttons[index].text,
                               style: TextStyle(fontSize: 22),
                             ),
                           ),
@@ -168,11 +191,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   child: MyLoading()));
                                         },
                                       );
-                                      Networking(widget.pass, widget.uname)
-                                          .downloadAdmitCard(
-                                              widget.user.buttons[index].link,
-                                              widget.user.buttons[index].text,
-                                              context);
+                                      Networking(pass, uname).downloadAdmitCard(
+                                          user.buttons[index].link,
+                                          user.buttons[index].text,
+                                          context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
@@ -207,11 +229,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                   child: MyLoading()));
                                         },
                                       );
-                                      Networking(widget.pass, widget.uname)
-                                          .downloadGradeCard(
-                                              widget.user.buttons[index].link,
-                                              widget.user.buttons[index].text,
-                                              context);
+                                      Networking(pass, uname).downloadGradeCard(
+                                          user.buttons[index].link,
+                                          user.buttons[index].text,
+                                          context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),

@@ -35,13 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          return uname != null
-              ? ProfilePage(
-                  user: user,
-                  uname: uname,
-                  pass: pass,
-                )
-              : LoginPage();
+          return uname != null ? Dashboard() : LoginPage();
         },
       ),
     );
