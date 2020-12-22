@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           SemButtons.decodeButtons(prefs.getString('buttons'));
       user = User(name: name, course: course, imgUrl: imgUrl, buttons: butons);
     }
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
           return uname != null ? Dashboard() : LoginPage();
