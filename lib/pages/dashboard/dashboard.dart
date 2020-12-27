@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:jumsRebootFlutter/models/semsterButtons.dart';
 import 'package:jumsRebootFlutter/models/user.dart';
 import 'package:jumsRebootFlutter/pages/notificationPage/notification.dart';
@@ -22,12 +23,37 @@ class _DashboardState extends State<Dashboard> {
   User user;
   bool isLoading = true;
   final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  bool updateAvailable = false;
+  bool updateDownloaded = false;
   @override
   void initState() {
     super.initState();
-    Updater.performInAppUpdate();
+    // Updater.performInAppUpdate();
+    performInAppUpdate();
     getDataFromDB();
+  }
+
+  Future<void> performInAppUpdate() async {
+    print("CHECKING FOR UPDATES");
+    AppUpdateInfo updateInfo;
+
+    try {
+      updateInfo = await InAppUpdate.checkForUpdate();
+    } catch (e) {
+      print(e);
+    }
+    print("UPDATE INFO IS $updateInfo");
+    if (updateInfo.updateAvailable) {
+      if (updateInfo.flexibleUpdateAllowed) {
+        this.setState(() {
+          updateAvailable = true;
+        });
+      } else if (updateInfo.immediateUpdateAllowed) {
+        await InAppUpdate.performImmediateUpdate();
+      }
+    } else {
+      print("No Update available");
+    }
   }
 
   getDataFromDB() async {
@@ -253,7 +279,62 @@ class _DashboardState extends State<Dashboard> {
               },
             ),
           ),
-
+          updateAvailable
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8.0,
+                    horizontal: 15,
+                  ),
+                  child: Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        updateDownloaded
+                            ? Text("App Updated Successfully")
+                            : Text("New version available"),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 6.0,
+                            horizontal: 3,
+                          ),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            color: Theme.of(context).primaryColor,
+                            onPressed: updateDownloaded
+                                ? () async {
+                                    await InAppUpdate.startFlexibleUpdate()
+                                        .then(
+                                      (_) {
+                                        this.setState(() {
+                                          updateDownloaded = true;
+                                        });
+                                        // InAppUpdate.completeFlexibleUpdate();
+                                      },
+                                    );
+                                  }
+                                : () async {
+                                    await InAppUpdate.completeFlexibleUpdate();
+                                  },
+                            child: Text(
+                              updateDownloaded ? "Restart App" : "Update Now!",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              : Container()
           // isLoading ? CircularProgressIndicator() : Container(),
           // PDFViewerScaffold(path: )
         ],
