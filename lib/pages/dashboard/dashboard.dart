@@ -307,7 +307,7 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             color: Theme.of(context).primaryColor,
-                            onPressed: updateDownloaded
+                            onPressed: !updateDownloaded
                                 ? () async {
                                     await InAppUpdate.startFlexibleUpdate()
                                         .then(
