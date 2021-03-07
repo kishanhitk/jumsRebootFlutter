@@ -36,11 +36,7 @@ class Networking {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ProfilePage(
-            user: user,
-            pass: pass,
-            uname: uname,
-          ),
+          builder: (context) => Dashboard(),
         ),
       );
     } else {
