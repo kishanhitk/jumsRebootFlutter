@@ -217,10 +217,10 @@ class _DashboardState extends State<Dashboard> {
                                                   child: MyLoading()));
                                         },
                                       );
-                                      // Networking(pass, uname).downloadAdmitCard(
-                                      //     user.buttons[index].link,
-                                      //     user.buttons[index].text,
-                                      //     context);
+                                      Networking(pass, uname).downloadAdmitCard(
+                                          user.buttons[index].link,
+                                          user.buttons[index].text,
+                                          context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
