@@ -213,14 +213,14 @@ class _DashboardState extends State<Dashboard> {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                               content: SizedBox(
-                                                  height: 300,
+                                                  height: 400,
                                                   child: MyLoading()));
                                         },
                                       );
-                                      Networking(pass, uname).downloadAdmitCard(
-                                          user.buttons[index].link,
-                                          user.buttons[index].text,
-                                          context);
+                                      // Networking(pass, uname).downloadAdmitCard(
+                                      //     user.buttons[index].link,
+                                      //     user.buttons[index].text,
+                                      //     context);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),

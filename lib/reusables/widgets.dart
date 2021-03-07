@@ -2,8 +2,33 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:jumsRebootFlutter/models/ad_state.dart';
+import 'package:provider/provider.dart';
 
-class MyLoading extends StatelessWidget {
+class MyLoading extends StatefulWidget {
+  @override
+  _MyLoadingState createState() => _MyLoadingState();
+}
+
+class _MyLoadingState extends State<MyLoading> {
+  BannerAd banner;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initilization.then((value) => {
+          setState(() {
+            banner = BannerAd(
+              size: AdSize.mediumRectangle,
+              adUnitId: adState.bannerAdUnitId,
+              listener: adState.listener,
+              request: AdRequest(),
+            )..load();
+          })
+        });
+  }
+
   final List<String> facts = [
     "The first computer was invented in the 1940s.",
     "Space smells like seared steak.",
@@ -38,9 +63,9 @@ class MyLoading extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 100,
+          height: 20,
           child: SpinKitSquareCircle(
-            size: 60,
+            size: 20,
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -53,14 +78,24 @@ class MyLoading extends StatelessWidget {
                 style: TextStyle(color: Colors.grey),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Text(
-                "${facts[Random().nextInt(facts.length)]}",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
+            SizedBox(
+                  height: 250,
+                  width: 300,
+                  child: AdWidget(
+                    ad: banner,
+                  ),
+                ) ??
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: AdWidget(
+                        ad: banner,
+                      ) ??
+                      Text(
+                        "${facts[Random().nextInt(facts.length)]}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                ),
             SizedBox(
               height: 20,
             )
