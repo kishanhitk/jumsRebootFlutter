@@ -2,9 +2,5 @@ Thank you for using JUMS Reboot!
 Here is what's new in this release:
 
 **Features**
-- Added In-App Updates.
-- Added more facts.
-
-**Bug Fixes**
-- Fixed: Blurry splash screen on some devices.
-- Fixed: Text overflow in loading dialog.
+- The app is now faster 🚀
+- Migrated server from Heroku to Render

@@ -21,7 +21,7 @@ class Networking {
   Future<void> login(BuildContext context) async {
     String serverResponse;
     Response response = await post(
-      "https://ancient-waters-86273.herokuapp.com/",
+      "https://jums-reboot.onrender.com/",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,7 +50,7 @@ class Networking {
   Future<void> resetPassword(
       String uname, String phone, BuildContext context) async {
     Response response = await post(
-      "https://ancient-waters-86273.herokuapp.com/forgotPassword",
+      "https://jums-reboot.onrender.com/forgotPassword",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -76,7 +76,7 @@ class Networking {
     var prefs = await SharedPreferences.getInstance();
     refreshKey.currentState?.show();
     Response response =
-        await get('https://ancient-waters-86273.herokuapp.com/notices');
+        await get('https://jums-reboot.onrender.com/notices');
     var resBody = response.body;
     var temp = json.decode(resBody)['notices'];
 
@@ -99,7 +99,7 @@ class Networking {
                   PDFScreen(File('$dir/${uname}Admit$text.pdf').path)));
     } else {
       Response response = await post(
-        "https://ancient-waters-86273.herokuapp.com/admitCard",
+        "https://jums-reboot.onrender.com/admitCard",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -143,7 +143,7 @@ class Networking {
                   PDFScreen(File('$dir/${uname}Grade$text.pdf').path)));
     } else {
       Response response = await post(
-        "https://ancient-waters-86273.herokuapp.com/gradeCard",
+        "https://jums-reboot.onrender.com/gradeCard",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
