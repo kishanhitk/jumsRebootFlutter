@@ -17,20 +17,19 @@ dependencies:
   firebase_core: "2.3.0"
   flutter_spinkit: ^4.1.2+1
   font_awesome_flutter: ^8.11.0
-  http: ^0.12.2
+  http: ^0.13.5
   in_app_update: ^1.1.15
   package_info: ^0.4.3+2
-  path_provider: ^1.6.27
+  path_provider: ^2.0.11
   share: ^0.6.5+4
   share_extend: ^1.1.9
-  shared_preferences: ^0.5.12+4
-  url_launcher: ^5.7.10
-  syncfusion_flutter_pdfviewer: ^18.4.49-beta
+  shared_preferences: ^2.0.15
+  url_launcher: ^6.1.6
+  syncfusion_flutter_pdfviewer: ^20.3.57
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^0.1.9
 
 flutter:
   uses-material-design: true
@@ -42,6 +41,3 @@ flutter:
     - family: ProductSans
       fonts:
         - asset: fonts/ProductSans-Regular.ttf
-flutter_native_splash:
-  image: assets/logo_trans.png
-  color: "#ffffff"
