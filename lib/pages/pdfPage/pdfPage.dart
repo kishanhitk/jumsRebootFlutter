@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
