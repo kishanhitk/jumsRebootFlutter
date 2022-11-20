@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/reusables/widgets.dart';
-import 'package:jumsRebootFlutter/services/networking.dart';
+import 'package:jums_reboot/reusables/widgets.dart';
+import 'package:jums_reboot/services/networking.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -16,13 +16,13 @@ class _NotificationPageState extends State<NotificationPage> {
   Future checkNotices() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> temp = prefs.getStringList('notices');
+    List<String> temp = prefs.getStringList('notices') ?? [];
     if (temp != null) {
       setState(() {
         notices = temp;
       });
     } else {
-      var temp = await Networking(null, null).getNotices(refreshKey);
+      var temp = await Networking("", "").getNotices(refreshKey);
       setState(() {
         notices = temp;
       });
@@ -42,7 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xff304ffe),
           onPressed: () async {
-            var notices = await Networking(null, null).getNotices(refreshKey);
+            var notices = await Networking("", "").getNotices(refreshKey);
             this.setState(() {
               notices = notices;
             });
@@ -71,8 +71,7 @@ class _NotificationPageState extends State<NotificationPage> {
             ? RefreshIndicator(
                 key: refreshKey,
                 onRefresh: () async {
-                  var notices =
-                      await Networking(null, null).getNotices(refreshKey);
+                  var notices = await Networking("", "").getNotices(refreshKey);
                   this.setState(() {
                     notices = notices;
                   });
@@ -97,9 +96,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   notices[index],
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.black ??
-                                        Color(0xff304ffe) ??
-                                        Colors.white,
+                                    color: Colors.black,
                                     fontFamily: "ProductSans",
                                   ),
                                 ),

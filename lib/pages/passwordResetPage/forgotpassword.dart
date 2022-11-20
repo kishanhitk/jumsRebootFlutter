@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/reusables/widgets.dart';
-import 'package:jumsRebootFlutter/services/networking.dart';
+import 'package:jums_reboot/reusables/widgets.dart';
+import 'package:jums_reboot/services/networking.dart';
 
 class ForgotPassword extends StatefulWidget {
   @override
@@ -9,8 +9,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  String uname;
-  String phone;
+  String? uname;
+  String? phone;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   String newPasswordText = ' ';
@@ -55,10 +55,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "Please enter your complete Roll No.";
-                                  } else
-                                    return null;
+                                  if (value != null) {
+                                    if (value.isEmpty) {
+                                      return "Please enter your complete Roll No.";
+                                    } else {
+                                      return null;
+                                    }
+                                  }
                                 },
                                 decoration: InputDecoration(
                                     fillColor: Color(
@@ -89,10 +92,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               child: TextFormField(
                                 autofillHints: [AutofillHints.telephoneNumber],
                                 validator: (value) {
-                                  if (value.length != 10)
-                                    return "Mobile number should be 10 digits.";
-                                  else
-                                    return null;
+                                  if (value != null) {
+                                    if (value.isEmpty) {
+                                      return "Mobile number should be 10 digits.";
+                                    } else {
+                                      return null;
+                                    }
+                                  }
                                 },
                                 decoration: InputDecoration(
                                     fillColor: Color(
@@ -122,19 +128,25 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               child: ButtonTheme(
                                 minWidth:
                                     MediaQuery.of(context).size.width * 0.9,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50)),
-                                  color: Color(
-                                    0xff304ffe,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    backgroundColor: Color(
+                                      0xff304ffe,
+                                    ),
                                   ),
                                   onPressed: () async {
-                                    if (_formKey.currentState.validate()) {
+                                    if (_formKey.currentState!.validate()) {
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      await Networking(uname, null)
-                                          .resetPassword(uname, phone, context);
+                                      if (uname != null && phone != null) {
+                                        await Networking(uname!, "")
+                                            .resetPassword(
+                                                uname!, phone!, context);
+                                      }
                                       setState(() {
                                         isLoading = false;
                                       });

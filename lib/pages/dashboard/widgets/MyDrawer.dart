@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/pages/examSchedulePage/exam_schedules_page.dart';
-import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
+import 'package:jums_reboot/pages/examSchedulePage/exam_schedules_page.dart';
+import 'package:jums_reboot/pages/loginPage/loginPage.dart';
 import 'package:package_info/package_info.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyDrawer extends StatefulWidget {
-  const MyDrawer({
-    Key key,
-  }) : super(key: key);
+  const MyDrawer({super.key});
 
   @override
-  _MyDrawerState createState() => _MyDrawerState();
+  State<MyDrawer> createState() => _MyDrawerState();
 }
 
 class _MyDrawerState extends State<MyDrawer> {
@@ -111,12 +109,14 @@ It also sends notification about new result announcements.""",
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
-            child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Color(0x11304ffe),
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: Color(0x11304ffe),
+                ),
                 onPressed: () {
-                  launch('https://kishanhitk.github.io');
+                  launchUrl(Uri.https('kishanhitk.github.io'));
                 },
                 child: Text(
                   "Kishan Kumar",

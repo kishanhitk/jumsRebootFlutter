@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/pages/passwordResetPage/forgotpassword.dart';
-import 'package:jumsRebootFlutter/reusables/widgets.dart';
-import 'package:jumsRebootFlutter/services/networking.dart';
+import 'package:jums_reboot/pages/passwordResetPage/forgotpassword.dart';
+import 'package:jums_reboot/reusables/widgets.dart';
+import 'package:jums_reboot/services/networking.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,9 +10,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String uname;
-  String pass;
-  String url;
+  String? uname;
+  String? pass;
+  String? url;
   bool isLoading = false;
   bool _isObscureText = true;
   void toggle() {
@@ -23,12 +23,12 @@ class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String serverResponse;
+  String serverResponse = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white ?? Color(0xff323D4E),
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           child: isLoading
@@ -38,9 +38,8 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: 100 ?? MediaQuery.of(context).size.width,
-                            maxHeight: 400),
+                        constraints:
+                            BoxConstraints(minHeight: 100, maxHeight: 400),
                         child: Image.asset(
                           'assets/logo_trans.png',
                         ),
@@ -55,10 +54,13 @@ class _LoginPageState extends State<LoginPage> {
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "Enter your roll no.";
-                                  } else
-                                    return null;
+                                  if (value != null) {
+                                    if (value.isEmpty) {
+                                      return "Enter your roll no.";
+                                    } else {
+                                      return null;
+                                    }
+                                  }
                                 },
                                 decoration: InputDecoration(
                                     filled: true,
@@ -86,10 +88,13 @@ class _LoginPageState extends State<LoginPage> {
                                   horizontal: 20.0, vertical: 10),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "Enter your password";
-                                  } else
-                                    return null;
+                                  if (value != null) {
+                                    if (value.isEmpty) {
+                                      return "Enter your password";
+                                    } else {
+                                      return null;
+                                    }
+                                  }
                                 },
                                 obscureText: _isObscureText,
                                 decoration: InputDecoration(
@@ -121,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Hero(
                               tag: "FOR",
-                              child: FlatButton(
+                              child: TextButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -141,18 +146,21 @@ class _LoginPageState extends State<LoginPage> {
                               child: ButtonTheme(
                                 minWidth:
                                     MediaQuery.of(context).size.width * 0.9,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50)),
-                                  color: Color(
-                                    0xff304ffe,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    backgroundColor: Color(
+                                      0xff304ffe,
+                                    ),
                                   ),
                                   onPressed: () async {
-                                    if (_formKey.currentState.validate()) {
+                                    if (_formKey.currentState!.validate()) {
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      await Networking(pass, uname)
+                                      await Networking(pass!, uname!)
                                           .login(context);
                                       setState(() {
                                         isLoading = false;

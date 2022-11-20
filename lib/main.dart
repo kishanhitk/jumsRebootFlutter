@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jumsRebootFlutter/pages/splash/splashScreen.dart';
-import 'package:jumsRebootFlutter/theme/themeData.dart';
+import 'package:jums_reboot/pages/splash/splashScreen.dart';
+import 'package:jums_reboot/theme/themeData.dart';
 
 main() {
   WidgetsFlutterBinding.ensureInitialized();

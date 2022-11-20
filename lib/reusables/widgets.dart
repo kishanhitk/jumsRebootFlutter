@@ -46,8 +46,8 @@ class MyLoading extends StatelessWidget {
         ),
         Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
+            const Padding(
+              padding: EdgeInsets.all(15.0),
               child: Text(
                 "While it loads, here is a quick fact.",
                 style: TextStyle(color: Colors.grey),
@@ -58,10 +58,10 @@ class MyLoading extends StatelessWidget {
               child: Text(
                 "${facts[Random().nextInt(facts.length)]}",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             )
           ],
@@ -72,35 +72,32 @@ class MyLoading extends StatelessWidget {
 }
 
 class LoginErrorDialog extends StatelessWidget {
-  const LoginErrorDialog({
-    Key key,
-  }) : super(key: key);
-
+  const LoginErrorDialog({super.key});
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Something Went Wrong.\nPossible Reasons:-"),
+      title: const Text("Something Went Wrong.\nPossible Reasons:-"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
+          const ListTile(
             title: Text(
                 "⚫ You entered a wrong roll number and password combination. Try resetting the password."),
           ),
-          ListTile(
+          const ListTile(
             title: Text("⚫ Original JUMS website is down."),
           ),
-          ListTile(
+          const ListTile(
             title: Text("⚫ Our server is down."),
           ),
         ],
       ),
       actions: [
-        FlatButton(
+        TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Dismiss"))
+            child: const Text("Dismiss"))
       ],
     );
   }

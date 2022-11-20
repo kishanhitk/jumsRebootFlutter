@@ -1,5 +1,5 @@
-import 'package:jumsRebootFlutter/models/semsterButtons.dart';
-import 'package:jumsRebootFlutter/models/user.dart';
+import 'package:jums_reboot/models/semsterButtons.dart';
+import 'package:jums_reboot/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Database {

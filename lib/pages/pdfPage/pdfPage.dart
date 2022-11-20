@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PDFScreen extends StatelessWidget {
   final String pathPDF;
@@ -9,7 +11,7 @@ class PDFScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PDFViewerScaffold(
+    return Scaffold(
         appBar: AppBar(
           leading: IconButton(
               icon: Icon(CupertinoIcons.back,
@@ -32,6 +34,6 @@ class PDFScreen extends StatelessWidget {
             ),
           ],
         ),
-        path: pathPDF);
+        body: SfPdfViewer.file(File(pathPDF)));
   }
 }

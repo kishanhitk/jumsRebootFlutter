@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:jumsRebootFlutter/models/user.dart';
-import 'package:jumsRebootFlutter/pages/pdfPage/pdfPage.dart';
-import 'package:jumsRebootFlutter/pages/dashboard/dashboard.dart';
-import 'package:jumsRebootFlutter/reusables/dialogs/dialogs.dart';
-import 'package:jumsRebootFlutter/reusables/widgets.dart';
-import 'package:jumsRebootFlutter/services/database.dart';
+import 'package:jums_reboot/models/user.dart';
+import 'package:jums_reboot/pages/pdfPage/pdfPage.dart';
+import 'package:jums_reboot/pages/dashboard/dashboard.dart';
+import 'package:jums_reboot/reusables/dialogs/dialogs.dart';
+import 'package:jums_reboot/reusables/widgets.dart';
+import 'package:jums_reboot/services/database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +21,7 @@ class Networking {
   Future<void> login(BuildContext context) async {
     String serverResponse;
     Response response = await post(
-      "https://jums-reboot.onrender.com/",
+      Uri.https("jums-reboot.onrender.com"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,7 +50,7 @@ class Networking {
   Future<void> resetPassword(
       String uname, String phone, BuildContext context) async {
     Response response = await post(
-      "https://jums-reboot.onrender.com/forgotPassword",
+      Uri.https("jums-reboot.onrender.com/forgotPassword"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -75,8 +75,9 @@ class Networking {
       GlobalKey<RefreshIndicatorState> refreshKey) async {
     var prefs = await SharedPreferences.getInstance();
     refreshKey.currentState?.show();
-    Response response =
-        await get('https://jums-reboot.onrender.com/notices');
+    Response response = await get(
+      Uri.https("jums-reboot.onrender.com/notices"),
+    );
     var resBody = response.body;
     var temp = json.decode(resBody)['notices'];
 
@@ -87,7 +88,7 @@ class Networking {
 
   Future<void> downloadAdmitCard(
       String link, String text, BuildContext context) async {
-    String dir = (await getExternalStorageDirectory()).path;
+    String dir = (await getExternalStorageDirectory())?.path ?? "";
     bool exists = await File('$dir/${uname}Admit$text.pdf').exists();
 
     if (exists) {
@@ -99,7 +100,7 @@ class Networking {
                   PDFScreen(File('$dir/${uname}Admit$text.pdf').path)));
     } else {
       Response response = await post(
-        "https://jums-reboot.onrender.com/admitCard",
+        Uri.https("jums-reboot.onrender.com/admitCard"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -130,7 +131,7 @@ class Networking {
 
   Future<void> downloadGradeCard(
       String link, String text, BuildContext context) async {
-    String dir = (await getExternalStorageDirectory()).path;
+    String dir = (await getExternalStorageDirectory())?.path ?? "";
     bool exists = await File('$dir/${uname}Grade$text.pdf').exists();
 
     if (exists) {
@@ -143,7 +144,9 @@ class Networking {
                   PDFScreen(File('$dir/${uname}Grade$text.pdf').path)));
     } else {
       Response response = await post(
-        "https://jums-reboot.onrender.com/gradeCard",
+        Uri.https(
+          "jums-reboot.onrender.com/gradeCard",
+        ),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

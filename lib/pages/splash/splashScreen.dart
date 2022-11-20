@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:jumsRebootFlutter/models/semsterButtons.dart';
-import 'package:jumsRebootFlutter/models/user.dart';
-import 'package:jumsRebootFlutter/pages/dashboard/dashboard.dart';
-import 'package:jumsRebootFlutter/pages/loginPage/loginPage.dart';
+import 'package:jums_reboot/models/semsterButtons.dart';
+import 'package:jums_reboot/pages/dashboard/dashboard.dart';
+import 'package:jums_reboot/pages/loginPage/loginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,16 +20,12 @@ class _SplashScreenState extends State<SplashScreen> {
   checkAuthentication() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var uname = prefs.getString('uname');
-    var pass;
-    User user;
     if (uname != null) {
-      pass = prefs.getString('pass');
-      String name = prefs.getString('name');
-      String course = prefs.getString('course');
-      String imgUrl = prefs.getString('imgUrl');
+      String name = prefs.getString('name') ?? "";
+      String course = prefs.getString('course') ?? "";
+      String imgUrl = prefs.getString('imgUrl') ?? "";
       List<SemButtons> butons =
-          SemButtons.decodeButtons(prefs.getString('buttons'));
-      user = User(name: name, course: course, imgUrl: imgUrl, buttons: butons);
+          SemButtons.decodeButtons(prefs.getString('buttons') ?? "");
     }
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

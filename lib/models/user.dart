@@ -1,27 +1,22 @@
-import 'package:jumsRebootFlutter/models/semsterButtons.dart';
+import 'package:jums_reboot/models/semsterButtons.dart';
 
 class User {
-  final String name;
-  final String course;
-  final String imgUrl;
-  final List<SemButtons> buttons;
+  String name;
+  String course;
+  String imgUrl;
+  List<SemButtons> buttons;
 
-  User({
-    this.name,
-    this.course,
-    this.buttons,
-    this.imgUrl,
-  });
+  User(this.name, this.course, this.imgUrl, this.buttons);
 
   factory User.fromJson(Map<String, dynamic> json) {
     var list = json['buttons'] as List;
     List<SemButtons> buttonList =
         list.map((i) => SemButtons.fromJson(i)).toList();
     return User(
-      name: json['name'],
-      course: json['course'],
-      imgUrl: json['imgUrl'],
-      buttons: buttonList,
+      json['name'],
+      json['course'],
+      json['imgUrl'],
+      buttonList,
     );
   }
 }
